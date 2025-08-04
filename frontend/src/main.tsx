@@ -1,13 +1,9 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import App from './App.tsx'
+import ReactDOM from "react-dom/client";
+import { BrowserRouter } from "react-router";
+import App from "./App";
 
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
+ReactDOM.createRoot(document.getElementById("root")!).render(
+  <BrowserRouter>
     <App />
-    <button className="bg-blue-500 text-white p-2 rounded">
-      Click Me
-    </button>
-  </StrictMode>,
-)
+  </BrowserRouter>
+);
