@@ -41,8 +41,8 @@ const Banner: React.FC=()=>{
 
     return(
         <>
-        <div className="relative w-screen overflow-hidden">
-          <Link to={bannerImages[currentSlides].link}   className="w-screen object-cover">
+        <div className="relative w-full overflow-hidden">
+          <Link to={bannerImages[currentSlides].link}   className="w-full object-cover">
             <img src={bannerImages[currentSlides].imageUrl} alt={bannerImages[currentSlides].altText}/>
           </Link>
           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex justify-between w-full px-3 z-10">
