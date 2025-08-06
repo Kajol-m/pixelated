@@ -6,15 +6,9 @@ const Button: React.FC<ButtonProps>=({variant, onClick, children,className})=>{
     const getButtonClass = (variant: ButtonVariant) => {
         switch(variant) {
             case 'primary':
-                return 'bg-white border border-black pt-2 pb-2 pl-5 pr-5 hover:underline';
+                return 'bg-white border border-black pt-2 pb-2 pl-5 pr-5 hover:underline underline-offset-4 decoration-1';
             case 'secondary':
-                return 'bg-[#8E7DBE]';
-            case 'danger':
-                return 'bg-[#F4F8D3]';
-            case 'success':
-                return 'bg-[#FFF8DC]';
-            case 'link':
-                return 'text-[#4A4A4A]';
+                return 'bg-black text-white pt-2 pb-2 pl-5 pr-5';
             default:
                 return '';
         }
