@@ -9,6 +9,7 @@ const Homepage:React.FC=()=>{
     return(
         <>
         <Header/>
+        <div className="pt-[81px]"></div>
         <Banner/>
         <ShopMenu/>
         <Collection/>

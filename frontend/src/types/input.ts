@@ -4,7 +4,6 @@ export interface InputProps{
     type?:string;
     placeholderText?:string;
     onChange:(value:string)=>void;
-    value:string;
     name:string;
 
 }
