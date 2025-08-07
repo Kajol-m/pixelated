@@ -1,9 +1,15 @@
+import { Route, Routes } from "react-router";
 import Mainpage from "./pages/MainPage/Mainpage";
+import Outfits from "./pages/Outfits/Outfits";
 function App() {
 
   return (
     <>
-    <Mainpage/>
+    <Routes>
+      <Route path="/" element={<Mainpage/>}/>
+      <Route path="/outfits" element={<Outfits/>}/>
+    </Routes>
+    
     </>
   )
 }
