@@ -1,4 +1,4 @@
-export type ButtonVariant="primary" | "secondary" | "danger" | "success" | "link";
+export type ButtonVariant="primary" | "secondary" | "signup-signin" | "success" | "link";
 
 export interface ButtonProps{
     variant: ButtonVariant;

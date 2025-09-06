@@ -48,7 +48,7 @@ const Input: React.FC<InputProps> = ({
           minLength={minLength}
           pattern={pattern}
           required={required}
-          className={`border-2 border-black rounded-none px-3 py-2 w-1/3`}
+          className={`border-2 border-black rounded-none px-3 py-2 w-full ${className}`}
         />
 
         {icon && (

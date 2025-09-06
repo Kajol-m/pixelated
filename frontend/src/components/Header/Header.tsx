@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { IoSearchSharp } from "react-icons/io5";
 import { FaRegHeart } from "react-icons/fa";
 import { FiUser } from "react-icons/fi";
@@ -8,7 +9,8 @@ const Header: React.FC = () => {
     <div className="fixed top-0 left-0 w-full bg-white z-50 flex justify-between py-5 px-8 items-center">
       {/*Left Side */}
       <div className="flex gap-8 items-center">
-        <h1 className="text-3xl font-semibold">PIXELATED</h1>
+        <Link to="/"><h1 className="text-3xl font-semibold">PIXELATED</h1></Link>
+        
         <nav>
           <ul className="flex gap-4 ">
             <li>
@@ -38,7 +40,7 @@ const Header: React.FC = () => {
           </div>
         </div>
         <div className="flex gap-6 text-2xl">
-          <FiUser />
+          <Link to="/registration"><FiUser /></Link>
           <FaRegHeart />
           <PiShoppingBagOpen />
         </div>
