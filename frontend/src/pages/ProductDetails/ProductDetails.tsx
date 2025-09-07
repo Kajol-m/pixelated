@@ -9,7 +9,8 @@ const ProductDetails: React.FC = () => {
       <div className="">
         <Header />
       </div>
-      <div className="flex flex-row  border-t-1 border-gray-300 mt-[90px] pt-[50px] ml-[100px] mr-[150px] pb-[100px]">
+      <hr className="border-gray-300 mt-[90px]" />
+      <div className="flex flex-row pt-[50px] ml-[100px] mr-[150px] pb-[100px]">
         <div className="w-1/2 ">
           <ImageDetails />
         </div>
