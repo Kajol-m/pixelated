@@ -1,10 +1,11 @@
-import { Route, Routes } from "react-router";
+import { Route, Routes, useParams } from "react-router";
 import Mainpage from "./pages/MainPage/Mainpage";
 import Outfits from "./pages/Outfits/Outfits";
 import ProductDetails from "./pages/ProductDetails/ProductDetails";
 import Registration from "./pages/Registration/Registration";
 import Login from "./pages/Login/Login";
 import ShoppingCart from "./pages/Shopping-cart/ShoppingCart";
+import PrettyInPink from "./pages/Collection/PrettyInPink/PrettyInPink";
 function App() {
 
   return (
@@ -15,7 +16,8 @@ function App() {
       <Route path="/product" element={<ProductDetails/>}/>
       <Route path="/login" element={<Login/>} />
       <Route path="/shoppingcart" element={<ShoppingCart/>}/>
-      <Route path="/registration" element={<Registration fullName={""} email={""} password={""} confirmPassword={""}/>}/>
+      <Route path="/registration" element={<Registration/>}/>
+      <Route path="/collections/:collectionId" element={<PrettyInPink/>}/>
     </Routes>
     
     </>

@@ -7,6 +7,8 @@ const Button: React.FC<ButtonProps> = ({
   onClick,
   children,
   className,
+  type,
+  ...rest
 }) => {
   const getButtonClass = (variant: ButtonVariant) => {
     switch (variant) {
@@ -19,7 +21,9 @@ const Button: React.FC<ButtonProps> = ({
       case "signup-signin":
         return "bg-black text-white pt-2 pb-2 pl-5 pr-5 hover:bg-gray-600";
       case "size-select":
-        return "bg-white border font-bold border-black pt-2 pb-2 pl-5 pr-5 ";
+        return "bg-white border font-bold border-black pt-2 pb-2 pl-5 pr-5 hover:bg-gray-200";
+      case "user-dropdown":
+        return "bg-white border border-black text-sm font-semibold pt-2 pb-2 pl-5 pr-5 hover:bg-gray-200";
       case "size-active":
         return "bg-black text-white font-bold pt-2 pb-2 pl-5 pr-5 ";
 
@@ -32,6 +36,8 @@ const Button: React.FC<ButtonProps> = ({
     <button
       className={`${getButtonClass(variant)} ${className}`}
       onClick={onClick}
+      type={type}
+      {...rest}
     >
       {children}
     </button>
