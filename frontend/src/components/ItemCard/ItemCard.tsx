@@ -27,15 +27,15 @@ const ItemCard: React.FC<ItemCardsProps> = ({
   return (
     <>
       <div className="pl-4 pr-4 pt-8 pb-8">
-        <div className="relative group w-full">
+        <div className="relative group w-full h-118 overflow-hidden">
           <Link to="/product">
-            <img src={imgUrl} alt={title} className="w-full block" />
+            <img src={imgUrl} alt={title} className="w-full h-full object-cover block" />
           </Link>
           <Link to="/product">
             <img
               src={imgHoverUrl}
               alt={title}
-              className="w-full absolute top-0 left-0 opacity-0 group-hover:opacity-100 transition-opacity duration-100"
+              className="w-full h-full object-cover absolute top-0 left-0 opacity-0 group-hover:opacity-100 transition-opacity duration-100"
             />
           </Link>
 

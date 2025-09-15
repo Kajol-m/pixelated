@@ -1,7 +1,12 @@
 import { FaRegStar } from "react-icons/fa";
 import { FaStar } from "react-icons/fa";
 import Button from "../../components/Button/Button";
+import {Link, useNavigate} from "react-router-dom";
+
 const Details: React.FC = () => {
+
+  const navigate=useNavigate();
+
   return (
     <div className="flex flex-col gap-2">
       <p className="text-2xl font-bold">No Mercy Black Borg Jacket</p>
@@ -51,9 +56,10 @@ const Details: React.FC = () => {
           </div>
         </div>
       </div>
-
+      <Link to ="/ShoppingCart">
       <div className="pt-2"><Button variant="signup-signin" onClick={()=>{}} className="w-full">Add to Bag</Button></div>
       {/* <div>Check PinCode</div> */}
+      </Link>
       <div>
          <div>
 <p className="font-semibold pt-2">Description</p>

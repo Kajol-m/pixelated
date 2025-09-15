@@ -12,17 +12,22 @@ interface InputProps {
   pattern?: string;
   required?: boolean;
   supportiveText?: string;
-  icon?: React.ReactNode; 
+  icon?: React.ReactNode;
+  errors?: string;
+  onFocus?: (e: React.FocusEvent<HTMLInputElement>) => void;
+  onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
 }
 
 const Input: React.FC<InputProps> = ({
   labelText,
-  placeholderText = '',
+  placeholderText = "",
   onChange,
-  type = 'text',
+  type = "text",
   value,
   inputId,
-  className = '',
+  className = "",
+  onFocus,
+  onBlur,
   name,
   min,
   minLength,
@@ -30,6 +35,7 @@ const Input: React.FC<InputProps> = ({
   required,
   supportiveText,
   icon,
+  errors,
 }) => {
   return (
     <div className={`grid gap-1 ${className}`}>
@@ -44,22 +50,33 @@ const Input: React.FC<InputProps> = ({
           value={value}
           id={inputId}
           name={name}
+          onFocus={onFocus}
+          onBlur={onBlur}
           min={min}
           minLength={minLength}
           pattern={pattern}
           required={required}
-          className={`border-2 border-black rounded-none px-3 py-2 w-full ${className}`}
+          className={`border-2 border-black rounded-none px-3 py-2 w-full ${className} ${errors ? "border-red-500" : "border-gray-300"}`}
         />
 
         {icon && (
-          <div className={`absolute inset-y-0 right-3 flex items-center pointer-events-auto text-gray-600 ${className}`}>
+          <div
+            className={`absolute inset-y-0 right-3 flex items-center pointer-events-auto text-gray-600 ${className}`}
+          >
             {icon}
           </div>
         )}
       </div>
-      {supportiveText && (
-        <span className={`text-gray-600 text-sm ${className}`}>{supportiveText}</span>
-      )}
+      {/* {supportiveText && (
+        <span className={`text-gray-600 text-sm ${className}`}>
+          {supportiveText}
+        </span>
+      )} */}
+      <span
+                className={`text-xs ${errors ? "text-red-500" : "text-gray-600"} block min-h-[10px]`}
+            >
+                {errors || supportiveText || "\u00A0"}
+            </span>
     </div>
   );
 };
