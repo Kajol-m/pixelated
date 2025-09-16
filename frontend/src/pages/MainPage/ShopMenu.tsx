@@ -23,12 +23,14 @@ const ShopMenu: React.FC = () => {
           SHOP PLANTS
         </Button>
       </Link>
+      <Link to={`/collections/COL00000002`}>
       <Button
         variant="primary"
         onClick={() => console.log("Shop Artwork Clicked")}
       >
         SHOP ARTWORK
       </Button>
+      </Link>
       <Button
         variant="primary"
         onClick={() => console.log("Shop Bestsellers Clicked")}

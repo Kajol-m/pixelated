@@ -1,14 +1,15 @@
-import { Route, Routes, useParams } from "react-router";
+import { Route, Routes} from "react-router";
 import Mainpage from "./pages/MainPage/Mainpage";
 import Outfits from "./pages/Outfits/Outfits";
 import ProductDetails from "./pages/ProductDetails/ProductDetails";
 import Registration from "./pages/Registration/Registration";
 import Login from "./pages/Login/Login";
 import ShoppingCart from "./pages/Shopping-cart/ShoppingCart";
-import PrettyInPink from "./pages/Collection/PrettyInPink/PrettyInPink";
+import CollectionPage from "./pages/Collection/PrettyInPink/CollectionPAge";
 function App() {
 
   return (
+    
     <>
     <Routes>
       <Route path="/" element={<Mainpage/>}/>
@@ -17,7 +18,7 @@ function App() {
       <Route path="/login" element={<Login/>} />
       <Route path="/shoppingcart" element={<ShoppingCart/>}/>
       <Route path="/registration" element={<Registration/>}/>
-      <Route path="/collections/:collectionId" element={<PrettyInPink/>}/>
+      <Route path="/collections/:collectionId" element={<CollectionPage/>}/>
     </Routes>
     
     </>
