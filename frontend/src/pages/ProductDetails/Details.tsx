@@ -1,16 +1,29 @@
 import { FaRegStar } from "react-icons/fa";
 import { FaStar } from "react-icons/fa";
-import Button from "../../components/Button/Button";
-import {Link, useNavigate} from "react-router-dom";
+import Button from "../../common/Button/Button";
+import { Link, useParams } from "react-router-dom";
+import { AdditionalDetails } from "./AdditionalDetails";
+import { useEffect, useState } from "react";
 
 const Details: React.FC = () => {
+  const { id } = useParams();
+  const [product, setProduct] = useState<any>(null);
 
-  const navigate=useNavigate();
+  useEffect(() => {
+    const fetchProduct = async () => {
+      const res = await fetch(`http://localhost:5000/api/products/${id}`);
+      const data = await res.json();
+      setProduct(data);
+    };
+    fetchProduct();
+  }, [id]);
+
+  if (!product) return <p>Loading...</p>;
 
   return (
     <div className="flex flex-col gap-2">
-      <p className="text-2xl font-bold">No Mercy Black Borg Jacket</p>
-      <p className="text-2xl font-bold">Rs. 12,500.00</p>
+      <p className="text-2xl font-bold">{product.product_name}</p>
+      <p className="text-2xl font-bold">{product.price}</p>
       <hr className="border-gray-300 h-px w-full" />
       <div className="flex flex-row">
         <div className="flex flex-row pt-1">
@@ -56,31 +69,16 @@ const Details: React.FC = () => {
           </div>
         </div>
       </div>
-      <Link to ="/ShoppingCart">
-      <div className="pt-2"><Button variant="signup-signin" onClick={()=>{}} className="w-full">Add to Bag</Button></div>
-      {/* <div>Check PinCode</div> */}
+      <Link to="/ShoppingCart">
+        <div className="pt-2">
+          <Button variant="signup-signin" onClick={() => {}} className="w-full">
+            Add to Bag
+          </Button>
+        </div>
+        {/* <div>Check PinCode</div> */}
       </Link>
       <div>
-         <div>
-<p className="font-semibold pt-2">Description</p>
-{/* <p>Not just a borg jacket, it’s armor.
-   <ul className="list-disc ml-4">
-      <li>Black fleece hoodie jacket</li>
-      <li>All over grey thorns design</li>
-      <li>Zip fastening with signature hardware</li>
-      <li>Minga rubber logo detail</li>
-      <li>Oversized fit</li>
-      <li>Long sleeves</li>
-      <li>Drop shoulders</li>
-      <li>Main: 100% polyester</li>
-      <li>Lining: 100% cotton</li>
-   </ul>
-   <p>Chiara wears size S/M and is 172 cm | 5'7" tall</p>
- </p> */}
-         </div>
-        
-        <p className="font-semibold pt-2">Shipping Policy</p>
-        <p className="font-semibold pt-2">Delivery and returns</p>
+        <AdditionalDetails/>
       </div>
     </div>
   );

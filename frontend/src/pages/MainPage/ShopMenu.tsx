@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import Button from "../../components/Button/Button";
+import Button from "../../common/Button/Button";
 
 const ShopMenu: React.FC = () => {
   return (
@@ -12,7 +12,7 @@ const ShopMenu: React.FC = () => {
           variant="primary"
           onClick={() => console.log("Shop Clothing Clicked")}
         >
-          SHOP CLOTHING
+          SHOP TOPS
         </Button>
       </Link>
       <Link to="/outfits">
@@ -20,15 +20,17 @@ const ShopMenu: React.FC = () => {
           variant="primary"
           onClick={() => console.log("Shop Plants Clicked")}
         >
-          SHOP PLANTS
+          SHOP BOTTOMS
         </Button>
       </Link>
+      <Link to={`/collections/COL00000002`}>
       <Button
         variant="primary"
         onClick={() => console.log("Shop Artwork Clicked")}
       >
-        SHOP ARTWORK
+        SHOP ACCESORIES
       </Button>
+      </Link>
       <Button
         variant="primary"
         onClick={() => console.log("Shop Bestsellers Clicked")}

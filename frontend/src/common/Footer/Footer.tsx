@@ -39,7 +39,8 @@ const Footer:React.FC=()=>{
                     <IoIosMail className="text-2xl"/>
                 </nav>
             </div>
-            <p className="flex justify-end text-xs py-4 pr-4">© 2025 PIXELATED INDIA Retail, LLC. All Rights Reserved.</p>
+            <p className="flex justify-end text-xs py-2 pr-4">© 2025 PIXELATED INDIA Retail, LLC. All Rights Reserved by Kajol Murmu.</p>
+            <p className="flex justify-end text-xs py-2 pr-4">All the images and UI inspo are from Minga London Urban Outfitters, Bonkers Corner, Virgio and Nasty Gal</p>
         </div>
         </>
     )

@@ -12,9 +12,9 @@ interface Product {
   image: string;
   hover_image?: string;
 }
-const PrettyInPink: React.FC = () => {
+const DesertGlow: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
-  const collectionId = "COL00000001";
+  const collectionId = "COL00000003";
 
   useEffect(() => {
   if (!collectionId) return;
@@ -73,4 +73,4 @@ const PrettyInPink: React.FC = () => {
   );
 };
 
-export default PrettyInPink;
+export default DesertGlow;

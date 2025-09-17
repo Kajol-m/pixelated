@@ -27,10 +27,10 @@ const Header: React.FC = () => {
               <a href="">CLOTHING</a>
             </li>
             <li>
-              <a href="">PLANTS</a>
+              <a href="">ACCESORIES</a>
             </li>
             <li>
-              <a href="">ARTWORK</a>
+              <a href="">BESTSELLERS</a>
             </li>
           </ul>
         </nav>

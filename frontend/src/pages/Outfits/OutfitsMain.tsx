@@ -1,4 +1,4 @@
-import Button from "../../components/Button/Button";
+import Button from "../../common/Button/Button";
 
 const OutfitsMain:React.FC=()=>{
     return(
