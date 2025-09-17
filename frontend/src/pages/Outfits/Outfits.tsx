@@ -13,24 +13,28 @@ const Outfits: React.FC = () => {
         <Filter />
         <div className="flex px-8">
           <ItemCard
+            id={'1'}
             imgUrl="/Pink-bow-top.webp"
             imgHoverUrl="/Pink-bow-top2.webp"
             title="PRETTY BOW BEADED EEMBROIDERY BABY TEE"
             price="$ 200"
           />
           <ItemCard
+           id={'1'}
             imgUrl="/Pink-bow-top.webp"
             imgHoverUrl="/Pink-bow-top2.webp"
             title="PRETTY BOW BEADED EEMBROIDERY BABY TEE"
             price="$ 200"
           />
           <ItemCard
+            id={'1'}
             imgUrl="/Pink-bow-top.webp"
             imgHoverUrl="/Pink-bow-top2.webp"
             title="PRETTY BOW BEADED EEMBROIDERY BABY TEE"
             price="$ 200"
           />
           <ItemCard
+            id={'1'}
             imgUrl="/Pink-bow-top.webp"
             imgHoverUrl="/Pink-bow-top2.webp"
             title="PRETTY BOW BEADED EEMBROIDERY BABY TEE"
@@ -40,24 +44,28 @@ const Outfits: React.FC = () => {
         </div>
         <div className="flex px-8">
             <ItemCard
+            id={'1'}
             imgUrl="/Pink-bow-top.webp"
             imgHoverUrl="/Pink-bow-top2.webp"
             title="PRETTY BOW BEADED EEMBROIDERY BABY TEE"
             price="$ 200"
           />
           <ItemCard
+           id={'1'}
             imgUrl="/Pink-bow-top.webp"
             imgHoverUrl="/Pink-bow-top2.webp"
             title="PRETTY BOW BEADED EEMBROIDERY BABY TEE"
             price="$ 200"
           />
           <ItemCard
+           id={'1'}
             imgUrl="/Pink-bow-top.webp"
             imgHoverUrl="/Pink-bow-top2.webp"
             title="PRETTY BOW BEADED EEMBROIDERY BABY TEE"
             price="$ 200"
           />
           <ItemCard
+           id={'1'}
             imgUrl="/Pink-bow-top.webp"
             imgHoverUrl="/Pink-bow-top2.webp"
             title="PRETTY BOW BEADED EEMBROIDERY BABY TEE"
@@ -66,24 +74,28 @@ const Outfits: React.FC = () => {
         </div>
         <div className="flex px-8 pb-8">
             <ItemCard
+             id={'1'}
             imgUrl="/Pink-bow-top.webp"
             imgHoverUrl="/Pink-bow-top2.webp"
             title="PRETTY BOW BEADED EEMBROIDERY BABY TEE"
             price="$ 200"
           />
           <ItemCard
+          id={'1'}
             imgUrl="/Pink-bow-top.webp"
             imgHoverUrl="/Pink-bow-top2.webp"
             title="PRETTY BOW BEADED EEMBROIDERY BABY TEE"
             price="$ 200"
           />
           <ItemCard
+          id={'1'}
             imgUrl="/Pink-bow-top.webp"
             imgHoverUrl="/Pink-bow-top2.webp"
             title="PRETTY BOW BEADED EEMBROIDERY BABY TEE"
             price="$ 200"
           />
           <ItemCard
+           id={'1'}
             imgUrl="/Pink-bow-top.webp"
             imgHoverUrl="/Pink-bow-top2.webp"
             title="PRETTY BOW BEADED EEMBROIDERY BABY TEE"

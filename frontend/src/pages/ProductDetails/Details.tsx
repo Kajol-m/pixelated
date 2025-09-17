@@ -1,13 +1,25 @@
 import { FaRegStar } from "react-icons/fa";
-import { FaStar } from "react-icons/fa";
 import Button from "../../common/Button/Button";
 import { Link, useParams } from "react-router-dom";
 import { AdditionalDetails } from "./AdditionalDetails";
 import { useEffect, useState } from "react";
 
+interface ProductImage {
+  url: string;
+  display_order: number;
+}
+
+interface Product {
+  product_id: string;
+  product_name: string;
+  price: string;
+  images: ProductImage[];
+  // add more fields if your API has them
+}
+
 const Details: React.FC = () => {
   const { id } = useParams();
-  const [product, setProduct] = useState<any>(null);
+  const [product, setProduct] = useState<Product | null>(null);
 
   useEffect(() => {
     const fetchProduct = async () => {

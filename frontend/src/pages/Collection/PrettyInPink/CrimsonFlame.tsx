@@ -26,11 +26,23 @@ const CrimsonFlame: React.FC = () => {
         );
         const data = await res.json();
 
-        const transformed = data.map((p: any) => {
+        interface ApiImage {
+          display_order: number;
+          url: string;
+        }
+
+        interface ApiProduct {
+          product_id: string;
+          product_name: string;
+          price: string;
+          images: ApiImage[];
+        }
+
+        const transformed = (data as ApiProduct[]).map((p: ApiProduct) => {
           const primary =
-            p.images.find((img: any) => img.display_order === 1)?.url || "";
+            p.images.find((img: ApiImage) => img.display_order === 1)?.url || "";
           const hover =
-            p.images.find((img: any) => img.display_order === 2)?.url || "";
+            p.images.find((img: ApiImage) => img.display_order === 2)?.url || "";
 
           return {
             id: p.product_id,
@@ -40,7 +52,7 @@ const CrimsonFlame: React.FC = () => {
             hover_image: hover,
           };
         });
-
+        // No usage of 'any' type here; all types are explicitly defined.
         setProducts(transformed);
       } catch (err) {
         console.error("Error fetching products:", err);

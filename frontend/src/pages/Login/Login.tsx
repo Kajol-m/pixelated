@@ -113,9 +113,11 @@ const Login = () => {
       localStorage.setItem("isLogin", "true");
 
       navigate("/");
-    } catch (err: any) {
-      if (err.response) {
-        alert(err.response.data.message || "Login failed");
+    } catch (err) {
+      if (typeof err === "object" && err !== null && "response" in err) {
+        // Type assertion to access err.response safely
+        const errorResponse = err as { response?: { data?: { message?: string } } };
+        alert(errorResponse.response?.data?.message || "Login failed");
       } else {
         alert("Server not reachable");
       }

@@ -167,13 +167,16 @@ const Registration: React.FC = () => {
 
     navigate("/login");
 
-  } catch (err: any) {
-    if (err.response) {
+  } catch (err) {
+    if (axios.isAxiosError(err) && err.response) {
       console.error("❌ API Error:", err.response.data);
       alert(err.response.data.message || "Registration failed");
-    } else {
+    } else if (err instanceof Error) {
       console.error("❌ Network Error:", err.message);
       alert("Server not reachable");
+    } else {
+      console.error("❌ Unknown Error:", err);
+      alert("An unexpected error occurred");
     }
   }
 };

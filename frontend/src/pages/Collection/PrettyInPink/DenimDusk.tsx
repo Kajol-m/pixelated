@@ -5,6 +5,18 @@ import Header from "../../../common/Header/Header";
 import ItemCard from "../../../common/ItemCard/ItemCard";
 import OutfitsMain from "../../Outfits/OutfitsMain";
 
+interface ProductImage {
+  url: string;
+  display_order: number;
+}
+
+interface ProductApi {
+  product_id: string;
+  product_name: string;
+  price: string;
+  images: ProductImage[];
+}
+
 interface Product {
   id: string;
   name: string;
@@ -24,13 +36,13 @@ const DenimDusk: React.FC = () => {
         const res = await fetch(
           `http://localhost:5000/api/products/collections/${collectionId}`
         );
-        const data = await res.json();
+        const data:ProductApi[] = await res.json();
 
-        const transformed = data.map((p: any) => {
+        const transformed: Product[] = data.map((p) => {
           const primary =
-            p.images.find((img: any) => img.display_order === 1)?.url || "";
+            p.images.find((img) => img.display_order === 1)?.url || "";
           const hover =
-            p.images.find((img: any) => img.display_order === 2)?.url || "";
+            p.images.find((img) => img.display_order === 2)?.url || "";
 
           return {
             id: p.product_id,
