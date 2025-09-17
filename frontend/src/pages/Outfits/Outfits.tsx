@@ -1,7 +1,7 @@
-import Filter from "../../components/Filter/Filter";
-import Footer from "../../components/Footer/Footer";
-import Header from "../../components/Header/Header";
-import ItemCard from "../../components/ItemCard/ItemCard";
+import Filter from "../../common/Filter/Filter";
+import Footer from "../../common/Footer/Footer";
+import Header from "../../common/Header/Header";
+import ItemCard from "../../common/ItemCard/ItemCard";
 import OutfitsMain from "./OutfitsMain";
 
 const Outfits: React.FC = () => {

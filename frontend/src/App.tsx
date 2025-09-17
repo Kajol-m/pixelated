@@ -5,7 +5,7 @@ import ProductDetails from "./pages/ProductDetails/ProductDetails";
 import Registration from "./pages/Registration/Registration";
 import Login from "./pages/Login/Login";
 import ShoppingCart from "./pages/Shopping-cart/ShoppingCart";
-import CollectionPage from "./pages/Collection/PrettyInPink/CollectionPAge";
+import CollectionPage from "./pages/Collection/PrettyInPink/CollectionPage";
 function App() {
 
   return (
@@ -19,6 +19,7 @@ function App() {
       <Route path="/shoppingcart" element={<ShoppingCart/>}/>
       <Route path="/registration" element={<Registration/>}/>
       <Route path="/collections/:collectionId" element={<CollectionPage/>}/>
+      <Route path="/product/:id" element={<ProductDetails />} />
     </Routes>
     
     </>

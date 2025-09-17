@@ -1,6 +1,6 @@
 import { useState } from "react";
-import Input from "../../components/Input/Input";
-import Button from "../../components/Button/Button";
+import Input from "../../common/Input/Input";
+import Button from "../../common/Button/Button";
 import { RxCross2 } from "react-icons/rx";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";

@@ -1,5 +1,5 @@
-import Footer from "../../components/Footer/Footer";
-import Header from "../../components/Header/Header";
+import Footer from "../../common/Footer/Footer";
+import Header from "../../common/Header/Header";
 import TrendingItems from "../MainPage/TrendingItems";
 import CartProduct from "./CartProduct";
 import CheckoutCart from "./CheckoutCart";

@@ -1,5 +1,5 @@
-import Footer from "../../components/Footer/Footer";
-import Header from "../../components/Header/Header";
+import Footer from "../../common/Footer/Footer";
+import Header from "../../common/Header/Header";
 import Banner from "./Banner";
 import Collection from "./Collection";
 import ShopMenu from "./ShopMenu";

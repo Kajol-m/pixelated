@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import Filter from "../../../components/Filter/Filter";
-import Footer from "../../../components/Footer/Footer";
-import Header from "../../../components/Header/Header";
-import ItemCard from "../../../components/ItemCard/ItemCard";
+import Filter from "../../../common/Filter/Filter";
+import Footer from "../../../common/Footer/Footer";
+import Header from "../../../common/Header/Header";
+import ItemCard from "../../../common/ItemCard/ItemCard";
 import OutfitsMain from "../../Outfits/OutfitsMain";
 
 interface Product {
@@ -59,6 +59,7 @@ const DesertGlow: React.FC = () => {
           {products.map((product) => (
             <ItemCard
               key={product.id}
+              id={product.id}
               imgUrl={product.image}
               imgHoverUrl={product.hover_image}
               title={product.name}
