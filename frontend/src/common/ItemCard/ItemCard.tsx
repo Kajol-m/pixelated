@@ -4,6 +4,7 @@ import { AiOutlineHeart } from "react-icons/ai";
 import { Link } from "react-router";
 
 interface ItemCardsProps {
+  id: string; 
   imgUrl?: string;
   imgHoverUrl?: string;
   discountTag?: string;
@@ -11,6 +12,7 @@ interface ItemCardsProps {
   price?: string;
 }
 const ItemCard: React.FC<ItemCardsProps> = ({
+  id,
   imgUrl,
   imgHoverUrl,
   discountTag,
@@ -27,16 +29,20 @@ const ItemCard: React.FC<ItemCardsProps> = ({
   return (
     <>
       <div className="pl-4 pr-4 pt-8 pb-8">
-        <div className="relative group w-full h-118 overflow-hidden">
-          <Link to="/product">
-            <img src={imgUrl} alt={title} className="w-full h-full object-cover block" />
+        <div className="relative group w-full h-118 overflow-hidden product-image-wishlist-and-addtocart">
+          <Link to={`/product/${id}`}>
+          <img
+            src={imgUrl}
+            alt={title}
+            className="w-full h-full object-cover block"
+          />
           </Link>
-          <Link to="/product">
-            <img
-              src={imgHoverUrl}
-              alt={title}
-              className="w-full h-full object-cover absolute top-0 left-0 opacity-0 group-hover:opacity-100 transition-opacity duration-100"
-            />
+         <Link to={`/product/${id}`}>
+          <img
+            src={imgHoverUrl}
+            alt={title}
+            className="w-full h-full object-cover absolute top-0 left-0 opacity-0 group-hover:opacity-100 transition-opacity duration-100"
+          />
           </Link>
 
           <div className="wishlist absolute top-5 right-7 w- z-10">
@@ -57,11 +63,13 @@ const ItemCard: React.FC<ItemCardsProps> = ({
             </button>
           </div>
         </div>
-        <Link to="/product">
-          <p className="pt-5 text-sm">{title}</p>
-        </Link>
+        <div className="product-title-and-price">
+          <Link to={`/product/${id}`}>
+            <p className="pt-5 text-sm">{title}</p>
+          </Link>
 
-        <p className="pt-1 text-sm">{price}</p>
+          <p className="pt-1 text-sm">{price}</p>
+        </div>
       </div>
     </>
   );

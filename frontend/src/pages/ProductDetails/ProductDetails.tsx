@@ -1,8 +1,8 @@
 import Details from "./Details";
 import ImageDetails from "./ImageDetails";
-import Header from "../../components/Header/Header";
+import Header from "../../common/Header/Header";
 import TrendingItems from "../MainPage/TrendingItems";
-import Footer from "../../components/Footer/Footer";
+import Footer from "../../common/Footer/Footer";
 const ProductDetails: React.FC = () => {
   return (
     <div className="">

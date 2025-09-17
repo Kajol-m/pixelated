@@ -1,4 +1,4 @@
-import ItemCard from "../../components/ItemCard/ItemCard";
+import ItemCard from "../../common/ItemCard/ItemCard";
 
 const TrendingItems:React.FC=()=>{
     return(
