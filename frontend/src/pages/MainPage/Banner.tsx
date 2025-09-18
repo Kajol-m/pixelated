@@ -2,22 +2,29 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { FiChevronLeft } from "react-icons/fi";
 import { FiChevronRight } from "react-icons/fi";
+import PrettyInPink from "../Collection/PrettyInPink/PrettyInPink";
+import DenimDusk from "../Collection/PrettyInPink/DenimDusk";
+import DesertGlow from "../Collection/PrettyInPink/DesertGlow";
 
 interface BannerProps{
     imageUrl:string;
     altText:string;
-    link:string;
+    component: React.ComponentType;
+    route:string;
 }
 const bannerImages:BannerProps[]=[
     {imageUrl:"/banner-1.webp",
     altText:"Banner Image 1",
-    link:"/about"},
+    component:PrettyInPink,
+  route: "/collections/COL00000001"},
     {imageUrl:"/banner-2.webp",
     altText:"Banner Image 2",
-    link:"#"},
+    component:DenimDusk,
+  route: "/collections/COL00000002"},
     {imageUrl:"/banner-3.webp",
     altText:"Banner Image 3",
-    link:"#"}
+    component:DesertGlow,
+  route: "/collections/COL00000003"}
 ];
 
 
@@ -42,7 +49,7 @@ const Banner: React.FC=()=>{
     return(
         <>
         <div className="relative w-full overflow-hidden">
-          <Link to={bannerImages[currentSlides].link}   className="w-full object-cover">
+          <Link to={bannerImages[currentSlides].route}   className="w-full object-cover">
             <img src={bannerImages[currentSlides].imageUrl} alt={bannerImages[currentSlides].altText}/>
           </Link>
           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex justify-between w-full px-3 z-10">

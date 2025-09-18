@@ -24,13 +24,11 @@ const Header: React.FC = () => {
         <nav>
           <ul className="flex gap-4 ">
             <li>
-              <a href="">CLOTHING</a>
+              <Link to={`/product/clothing`}>CLOTHING</Link>
             </li>
+            <Link to={`/product/accessories`}>ACCESSORIES</Link>
             <li>
-              <a href="">ACCESORIES</a>
-            </li>
-            <li>
-              <a href="">BESTSELLERS</a>
+              <Link to={`/bestsellers`}>BESTSELLERS</Link>
             </li>
           </ul>
         </nav>
