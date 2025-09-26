@@ -2,6 +2,9 @@
 
 @plugin 'tailwindcss-animate';
 @import "tw-animate-css";
+@import "swiper/css";
+@import "swiper/css/navigation";
+@import "swiper/css/pagination";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -120,3 +123,4 @@
     @apply bg-background text-foreground;
   }
 }
+

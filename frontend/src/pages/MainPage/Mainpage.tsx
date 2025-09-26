@@ -14,7 +14,7 @@ const Homepage:React.FC=()=>{
         <Banner/>
         <ShopMenu/>
         <Collection/>
-        <p className="pl-8 ml-6 pr-8 mr-2 pt-8">TRENDING ITEMS</p>
+        <p className="md:pl-8 ml-6 pr-8 mr-2 md:pt-8 pt-4">TRENDING ITEMS</p>
         <TrendingItems/>
         <p className="pl-8 ml-6 pr-8 mr-2 pt-8">BESTSELLERS</p>
         <BestsellerCarousel/>

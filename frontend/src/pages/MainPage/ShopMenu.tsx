@@ -2,16 +2,18 @@ import { Link } from "react-router-dom";
 import Button from "../../common/Button/Button";
 
 const ShopMenu: React.FC = () => {
-  
+  const collectionId='COL00000004';
   return (
-    <div className="p-5 gap-6 flex flex-row items-center justify-center">
-      <Button variant="primary" onClick={() => console.log("Shop Now Clicked")}>
+    <div className="lg:p-5 p-3 gap-6 flex flex-row items-center justify-center">
+      <Link to={`/collections/${collectionId}`}>
+      <Button variant="primary" onClick={() => {}} className="hidden sm:block">
         SHOP NEW ARRIVALS
       </Button>
+      </Link>
       <Link to={`/product/tops`}>
         <Button
           variant="primary"
-          onClick={() => console.log("Shop Clothing Clicked")}
+          onClick={() => {}}
         >
           SHOP TOPS
         </Button>
@@ -35,7 +37,7 @@ const ShopMenu: React.FC = () => {
       <Link to ={'/bestsellers'}>
       <Button
         variant="primary"
-        onClick={() => console.log("Shop Bestsellers Clicked")}
+        onClick={() => console.log("Shop Bestsellers Clicked")} className="hidden sm:block"
       >
         SHOP BESTSELLERS
       </Button>

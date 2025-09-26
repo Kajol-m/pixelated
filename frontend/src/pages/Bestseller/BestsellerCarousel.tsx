@@ -68,7 +68,7 @@ const BestsellerCarousel: React.FC = () => {
           ))}
       </div> */}
       <div className="overflow-x-auto px-8 py-4 scrollbar-hide">
-      <div className="grid grid-flow-col auto-cols-[25%] gap-4 items-center">
+      <div className="grid grid-flow-col lg:auto-cols-[25%] md:auto-cols-[50%] auto-cols-[50%] gap-4 items-center">
         {products.map((product) => (
           <ItemCard
             key={product.id}

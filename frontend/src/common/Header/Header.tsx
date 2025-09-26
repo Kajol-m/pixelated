@@ -14,14 +14,14 @@ const Header: React.FC = () => {
   };
 
   return (
-    <div className="fixed top-0 left-0 w-full bg-white z-50 flex justify-between py-5 px-8 items-center">
+    <div className="fixed top-0 left-0 w-full bg-white z-50 flex justify-between py-5 lg:px-8 md:px-5 px-5 items-center">
       {/*Left Side */}
       <div className="flex gap-8 items-center">
         <Link to="/">
           <h1 className="text-3xl font-semibold">PIXELATED</h1>
         </Link>
 
-        <nav>
+        <nav className="hidden lg:flex">
           <ul className="flex gap-4 ">
             <li>
               <Link to={`/product/clothing`}>CLOTHING</Link>
@@ -34,7 +34,7 @@ const Header: React.FC = () => {
         </nav>
       </div>
       {/*Right Side */}
-      <div className="flex items-center gap-4">
+      <div className="hidden lg:flex flex items-center gap-4">
         <div className="flex items-center">
           <input
             type="text"
@@ -66,7 +66,8 @@ const Header: React.FC = () => {
           <PiShoppingBagOpen />
         </div>
       </div>
-    </div>
+      </div>
+    
   );
 };
 export default Header;
