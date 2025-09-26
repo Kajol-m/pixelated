@@ -3,7 +3,7 @@ import Filter from "../../../common/Filter/Filter";
 import Footer from "../../../common/Footer/Footer";
 import Header from "../../../common/Header/Header";
 import ItemCard from "../../../common/ItemCard/ItemCard";
-import OutfitsMain from "../../Outfits/OutfitsMain";
+// import OutfitsMain from "../../Outfits/OutfitsMain";
 
 interface ProductImage {
   url: string;
