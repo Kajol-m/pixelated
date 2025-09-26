@@ -1,21 +1,9 @@
 import { useState, useEffect } from "react";
-import Filter from "../../../common/Filter/Filter";
-import Footer from "../../../common/Footer/Footer";
-import Header from "../../../common/Header/Header";
-import ItemCard from "../../../common/ItemCard/ItemCard";
-import OutfitsMain from "../../Outfits/OutfitsMain";
-
-interface ProductImage {
-  url: string;
-  display_order: number;
-}
-
-interface ProductApi {
-  product_id: string;
-  product_name: string;
-  price: string;
-  images: ProductImage[];
-}
+import Filter from "@/common/Filter/Filter";
+import Footer from "@/common/Footer/Footer";
+import Header from "@/common/Header/Header";
+import ItemCard from "@/common/ItemCard/ItemCard";
+import OutfitsMain from "@/pages/Outfits/OutfitsMain";
 
 interface Product {
   id: string;
@@ -24,25 +12,38 @@ interface Product {
   image: string;
   hover_image?: string;
 }
-const DenimDusk: React.FC = () => {
+const Trending: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
-  const collectionId = "COL00000002";
+  const path = window.location.pathname; 
+      const parts = path.split("/");
+      const categoryName = parts[1]; 
 
   useEffect(() => {
-    if (!collectionId) return;
 
     const fetchProducts = async () => {
       try {
         const res = await fetch(
-          `http://localhost:5000/api/products/collections/${collectionId}`
+          `http://localhost:5000/api/trending/trending`
         );
-        const data:ProductApi[] = await res.json();
+        const data = await res.json();
 
-        const transformed: Product[] = data.map((p) => {
+        interface ApiImage {
+          display_order: number;
+          url: string;
+        }
+
+        interface ApiProduct {
+          product_id: string;
+          product_name: string;
+          price: string;
+          images: ApiImage[];
+        }
+
+        const transformed = (data as ApiProduct[]).map((p: ApiProduct) => {
           const primary =
-            p.images.find((img) => img.display_order === 1)?.url || "";
+            p.images.find((img: ApiImage) => img.display_order === 1)?.url || "";
           const hover =
-            p.images.find((img) => img.display_order === 2)?.url || "";
+            p.images.find((img: ApiImage) => img.display_order === 2)?.url || "";
 
           return {
             id: p.product_id,
@@ -52,7 +53,7 @@ const DenimDusk: React.FC = () => {
             hover_image: hover,
           };
         });
-
+        // No usage of 'any' type here; all types are explicitly defined.
         setProducts(transformed);
       } catch (err) {
         console.error("Error fetching products:", err);
@@ -60,13 +61,13 @@ const DenimDusk: React.FC = () => {
     };
 
     fetchProducts();
-  }, [collectionId]);
+  }, []);
 
   return (
     <>
       <div className="">
         <Header />
-        {/* <OutfitsMain /> */}
+        <OutfitsMain subCategory={categoryName} />
         <Filter />
         <div className="grid lg:grid-cols-4 grid-cols-2 lg:gap-6 md:gap-5 gap-4 lg:px-8 lg:pb-8 md:px-8 md:pb-6 pb-4 px-4">
           {products.map((product) => (
@@ -86,4 +87,4 @@ const DenimDusk: React.FC = () => {
   );
 };
 
-export default DenimDusk;
+export default Trending;

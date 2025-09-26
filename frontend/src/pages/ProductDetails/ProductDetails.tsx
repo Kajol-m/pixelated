@@ -10,11 +10,11 @@ const ProductDetails: React.FC = () => {
         <Header />
       </div>
       <hr className="border-gray-300 mt-[90px]" />
-      <div className="flex flex-row pt-[50px] ml-[100px] mr-[150px] pb-[100px]">
-        <div className="w-1/2 ">
+      <div className="flex lg:flex-row flex-col lg:pt-[50px] lg:ml-[100px] lg:mr-[150px] lg:pb-[100px] pt-[30px] ml-[50px] mr-[50px] pb-[40px]">
+        <div className="lg:w-1/2 ">
           <ImageDetails />
         </div>
-        <div className="w-1/2  ">
+        <div className="lg:w-1/2  ">
           <Details />
         </div>
       </div>

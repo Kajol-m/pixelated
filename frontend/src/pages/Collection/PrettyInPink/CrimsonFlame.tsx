@@ -66,9 +66,9 @@ const CrimsonFlame: React.FC = () => {
     <>
       <div className="">
         <Header />
-        <OutfitsMain />
+        {/* <OutfitsMain /> */}
         <Filter />
-        <div className="grid grid-cols-4 gap-6 px-8 pb-8">
+        <div className="grid lg:grid-cols-4 grid-cols-2 lg:gap-6 md:gap-5 gap-4 lg:px-8 lg:pb-8 md:px-8 md:pb-6 pb-4 px-4">
           {products.map((product) => (
             <ItemCard
               id={product.id}
