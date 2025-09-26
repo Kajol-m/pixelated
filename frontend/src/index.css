@@ -1,1 +1,12 @@
 @import 'tailwindcss';
+@import "swiper/css";
+@import "swiper/css/navigation";
+@import "swiper/css/pagination";
+
+.custom-swiper .swiper-pagination-bullet {
+  @apply bg-gray-900;
+}
+
+.custom-swiper .swiper-pagination-bullet-active {
+  @apply bg-white
+}

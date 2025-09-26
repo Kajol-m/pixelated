@@ -20,14 +20,14 @@ interface ApiProduct {
   price: string;
   images: ApiImage[];
 }
-const TrendingItems: React.FC = () => {
+const BestsellerCarousel: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const navigate=useNavigate()
   useEffect(() => {
-    const fetchTrendingItems = async () => {
+    const fetchBestsellerItems = async () => {
       try {
         const res = await fetch(
-          `http://localhost:5000/api/trending/trending-items`
+          `http://localhost:5000/api/bestseller/bestseller-items`
         );
         const data = await res.json();
         const imageRequired = (data as ApiProduct[]).map((p: ApiProduct) => {
@@ -51,7 +51,7 @@ const TrendingItems: React.FC = () => {
         console.error("Error fetching trending items:", err);
       }
     };
-    fetchTrendingItems();
+    fetchBestsellerItems();
   },[]);
   return (
     <>
@@ -67,7 +67,7 @@ const TrendingItems: React.FC = () => {
             />
           ))}
       </div> */}
-      <div className="overflow-x-auto md:px-8 py-4 scrollbar-hide">
+      <div className="overflow-x-auto px-8 py-4 scrollbar-hide">
       <div className="grid grid-flow-col lg:auto-cols-[25%] md:auto-cols-[50%] auto-cols-[50%] gap-4 items-center">
         {products.map((product) => (
           <ItemCard
@@ -82,8 +82,8 @@ const TrendingItems: React.FC = () => {
 
         {/* Arrow / See All Card */}
         <div
-          className="flex-shrink-0 w-full min-w-[250px] flex items-center justify-center  cursor-pointer hover:bg-gray-100"
-          onClick={() => navigate("/trending")}
+          className="flex-shrink-0 w-full min-w-[250px] flex items-center justify-center border-2 border-gray-300 rounded-lg cursor-pointer hover:bg-gray-100"
+          onClick={() => navigate("/bestsellers")}
         >
           <span className="text-lg font-semibold flex items-center gap-2">
             See All
@@ -107,4 +107,4 @@ const TrendingItems: React.FC = () => {
     </>
   );
 };
-export default TrendingItems;
+export default BestsellerCarousel;

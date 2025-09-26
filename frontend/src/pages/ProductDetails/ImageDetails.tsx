@@ -18,6 +18,8 @@
 
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination } from "swiper/modules";
 
 interface ProductImage {
   image_id: string;
@@ -52,9 +54,10 @@ const ImageDetails: React.FC = () => {
   }, [id]);
 
   return (
-    <div className="flex flex-row gap-6">
+    <>
+    <div className="hidden lg:flex flex-row gap-6">
       {/* Thumbnails */}
-      <div className="flex flex-col gap-6 w-[75px]">
+      <div className="flex flex-col gap-6 w-[75px] overflow-y-auto ">
         {images.map((img) => (
           <img
             key={img.image_id}
@@ -73,6 +76,27 @@ const ImageDetails: React.FC = () => {
         )}
       </div>
     </div>
+    <div className="block lg:hidden w-full">
+        <Swiper
+          modules={[ Pagination]}
+          navigation
+          pagination={{ clickable: true }}
+          spaceBetween={10}
+          slidesPerView={1}
+          className="w-full h-auto custom-swiper"
+        >
+          {images.map((img) => (
+            <SwiperSlide key={img.image_id}>
+              <img
+                src={img.image_url}
+                alt={img.image_alt_text || "product image"}
+                className="w-full h-auto object-contain"
+              />
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </div>
+    </>
   );
 };
 

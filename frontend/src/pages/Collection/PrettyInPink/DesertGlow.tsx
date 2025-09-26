@@ -3,7 +3,7 @@ import Filter from "../../../common/Filter/Filter";
 import Footer from "../../../common/Footer/Footer";
 import Header from "../../../common/Header/Header";
 import ItemCard from "../../../common/ItemCard/ItemCard";
-import OutfitsMain from "../../Outfits/OutfitsMain";
+// import OutfitsMain from "../../Outfits/OutfitsMain";
 
 interface ProductImage {
   url: string;
@@ -65,9 +65,9 @@ const DesertGlow: React.FC = () => {
     <>
       <div className="">
         <Header />
-        <OutfitsMain />
+        {/* <OutfitsMain /> */}
         <Filter />
-        <div className="grid grid-cols-4 gap-6 px-8 pb-8">
+        <div className="grid lg:grid-cols-4 grid-cols-2 lg:gap-6 md:gap-5 gap-4 lg:px-8 lg:pb-8 md:px-8 md:pb-6 pb-4 px-4">
           {products.map((product) => (
             <ItemCard
               key={product.id}

@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
-import Filter from "../../../common/Filter/Filter";
-import Footer from "../../../common/Footer/Footer";
-import Header from "../../../common/Header/Header";
-import ItemCard from "../../../common/ItemCard/ItemCard";
-// import OutfitsMain from "../../Outfits/OutfitsMain";
+import Filter from "@/common/Filter/Filter";
+import Footer from "@/common/Footer/Footer";
+import Header from "@/common/Header/Header";
+import ItemCard from "@/common/ItemCard/ItemCard";
+import OutfitsMain from "@/pages/Outfits/OutfitsMain";
 
 interface Product {
   id: string;
@@ -12,17 +12,16 @@ interface Product {
   image: string;
   hover_image?: string;
 }
-const CrimsonFlame: React.FC = () => {
+const Bestseller: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
-  const collectionId = "COL00000004";
-
+const path = window.location.pathname; 
+      const parts = path.split("/");
+      const categoryName = parts[1]; 
   useEffect(() => {
-    if (!collectionId) return;
-
     const fetchProducts = async () => {
       try {
         const res = await fetch(
-          `http://localhost:5000/api/products/collections/${collectionId}`
+          `http://localhost:5000/api/bestseller/bestsellers`
         );
         const data = await res.json();
 
@@ -60,13 +59,13 @@ const CrimsonFlame: React.FC = () => {
     };
 
     fetchProducts();
-  }, [collectionId]);
+  }, []);
 
   return (
     <>
       <div className="">
         <Header />
-        {/* <OutfitsMain /> */}
+        <OutfitsMain subCategory={categoryName} />
         <Filter />
         <div className="grid lg:grid-cols-4 grid-cols-2 lg:gap-6 md:gap-5 gap-4 lg:px-8 lg:pb-8 md:px-8 md:pb-6 pb-4 px-4">
           {products.map((product) => (
@@ -86,4 +85,4 @@ const CrimsonFlame: React.FC = () => {
   );
 };
 
-export default CrimsonFlame;
+export default Bestseller;

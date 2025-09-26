@@ -82,13 +82,13 @@ const Collection: React.FC = () => {
   }, []);
 
   return (
-    <div className="grid grid-cols-4">
+    <div className="grid lg:grid-cols-4 grid-cols-2 ">
       <div className="relative">
         <img
           src={prettyInPink ?? undefined}
         //   src="/Pink-bow-top.webp"
           alt="Coquette-Collection"
-          className="w-full h-143 object-cover"
+          className="w-full h-full object-cover"
         />
         <Link to={`/collections/COL00000001`}>
           <Button
@@ -105,13 +105,13 @@ const Collection: React.FC = () => {
           src={denimDusk ?? undefined}
         // src="/White-hoodie.webp"
           alt="Coquette-Collection"
-          className="w-full h-143 object-cover"
+          className="w-full h-full object-cover"
         />
         <Link to={`/collections/COL00000002`}>
           <Button
             variant="primary"
             onClick={() => console.log("Shop Coquette Collection Clicked")}
-            className="absolute bottom-5 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+            className="absolute bottom-5 left-1/2 transform -translate-x-1/2 -translate-y-1/2 whitespace-nowrap"
           >
             SHOP DENIM DUSK
           </Button>
@@ -121,13 +121,13 @@ const Collection: React.FC = () => {
         <img
           src={desertGlow ?? undefined}
           alt="Coquette-Collection"
-          className="w-full h-143 object-cover"
+          className="w-full h-full object-cover"
         />
         <Link to={`/collections/COL00000003`}>
           <Button
             variant="primary"
             onClick={() => console.log("Shop Coquette Collection Clicked")}
-            className="absolute bottom-5 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+            className="absolute bottom-5 left-1/2 transform -translate-x-1/2 -translate-y-1/2 whitespace-nowrap"
           >
             SHOP DESERT GLOW
           </Button>
@@ -137,7 +137,7 @@ const Collection: React.FC = () => {
         <img
           src={crimsonFlame ?? undefined}
           alt="Coquette-Collection"
-          className="w-full h-143 object-cover"
+          className="w-full h-full object-cover"
         />
         <Link to={`/collections/COL00000004`}>
           <Button
