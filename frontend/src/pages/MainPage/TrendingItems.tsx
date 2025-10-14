@@ -27,7 +27,7 @@ const TrendingItems: React.FC = () => {
     const fetchTrendingItems = async () => {
       try {
         const res = await fetch(
-          `http://localhost:5000/api/trending/trending-items`
+          `https://pixelated-node-2.onrender.com/api/trending/trending-items`
         );
         const data = await res.json();
         const imageRequired = (data as ApiProduct[]).map((p: ApiProduct) => {
@@ -67,8 +67,8 @@ const TrendingItems: React.FC = () => {
             />
           ))}
       </div> */}
-      <div className="overflow-x-auto md:px-8 py-4 scrollbar-hide">
-      <div className="grid grid-flow-col lg:auto-cols-[25%] md:auto-cols-[50%] auto-cols-[50%] gap-4 items-center">
+      <div className="overflow-x-auto  px-8 py-4 scrollbar-hide">
+      <div className="grid grid-flow-col lg:auto-cols-[25%] md:auto-cols-[50%] auto-cols-[50%] gap-4">
         {products.map((product) => (
           <ItemCard
             key={product.id}

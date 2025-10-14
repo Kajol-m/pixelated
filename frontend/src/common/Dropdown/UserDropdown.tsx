@@ -2,15 +2,17 @@ import { useNavigate } from "react-router-dom";
 import Button from "../Button/Button";
 
 const UserDropdown: React.FC = () => {
-
   const navigate = useNavigate();
 
   const isLogin = localStorage.getItem("isLogin");
 
   const handleLogout = () => {
+    const user = JSON.parse(localStorage.getItem("User") || "{}");
+    const userId = user.user_id;
     localStorage.removeItem("User");
     localStorage.removeItem("token");
     localStorage.removeItem("isLogin");
+    localStorage.removeItem(`wishlist_${userId}`);
     navigate("/");
   };
   const handleProfile = () => {

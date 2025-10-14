@@ -11,13 +11,11 @@ const ShoppingCart: React.FC = () => {
       <hr className="border-gray-300 mt-[90px]" />
       <p className="text-xl ml-8 pr-8 mr-2 pt-8">SHOPPING CART</p>
       <hr className="border-gray-300  mr-8 ml-8 mt-8" />
-      <div className="flex flex-row">
-        <div className="w-2/3 pb-8">
-          <CartProduct />
-          <CartProduct />
+      <div className="flex lg:flex-row flex-col">
+        <div className="lg:w-2/3 pb-8">
           <CartProduct />
         </div>
-        <div className="w-1/3 p-8">
+        <div className="lg:w-1/3 p-8">
         <div className="sticky top-[100px] pb-[100px]">
             <CheckoutCart />
         </div>

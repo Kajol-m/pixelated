@@ -13,7 +13,7 @@ const Collection: React.FC = () => {
     const getPrettyInPinkImage = async () => {
       try {
         const res = await fetch(
-          `http://localhost:5000/api/products/collectionimage/PrettyInPink`
+          `https://pixelated-node-2.onrender.com/api/products/collectionimage/PrettyInPink`
         );
         const data = await res.json();
 
@@ -31,7 +31,7 @@ const Collection: React.FC = () => {
     const getDenimDuskImage = async () => {
       try {
         const res = await fetch(
-          `http://localhost:5000/api/products/collectionimage/DenimDusk`
+          `https://pixelated-node-2.onrender.com/api/products/collectionimage/DenimDusk`
         );
         const data = await res.json();
 
@@ -49,7 +49,7 @@ const Collection: React.FC = () => {
     const getDesertGlowImage = async () => {
       try {
         const res = await fetch(
-          `http://localhost:5000/api/products/collectionimage/DesertGlow`
+          `https://pixelated-node-2.onrender.com/api/products/collectionimage/DesertGlow`
         );
         const data = await res.json();
 
@@ -67,7 +67,7 @@ const Collection: React.FC = () => {
     const getCrimsonFlameImage = async () => {
       try {
         const res = await fetch(
-          `http://localhost:5000/api/products/collectionimage/CrimsonFlame`
+          `https://pixelated-node-2.onrender.com/api/products/collectionimage/CrimsonFlame`
         );
         const data = await res.json();
 

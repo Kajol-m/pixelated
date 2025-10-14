@@ -14,14 +14,14 @@ interface Product {
 }
 const Bestseller: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
-const path = window.location.pathname; 
-      const parts = path.split("/");
-      const categoryName = parts[1]; 
+  const path = window.location.pathname;
+  const parts = path.split("/");
+  const categoryName = parts[1];
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         const res = await fetch(
-          `http://localhost:5000/api/bestseller/bestsellers`
+          `https://pixelated-node-2.onrender.com/api/bestseller/bestsellers`
         );
         const data = await res.json();
 
@@ -39,9 +39,11 @@ const path = window.location.pathname;
 
         const transformed = (data as ApiProduct[]).map((p: ApiProduct) => {
           const primary =
-            p.images.find((img: ApiImage) => img.display_order === 1)?.url || "";
+            p.images.find((img: ApiImage) => img.display_order === 1)?.url ||
+            "";
           const hover =
-            p.images.find((img: ApiImage) => img.display_order === 2)?.url || "";
+            p.images.find((img: ApiImage) => img.display_order === 2)?.url ||
+            "";
 
           return {
             id: p.product_id,

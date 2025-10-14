@@ -33,7 +33,7 @@ const GetAllClothing: React.FC = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await fetch(`http://localhost:5000/api/products/clothing`);
+        const res = await fetch(`https://pixelated-node-2.onrender.com/api/products/clothing`);
         const data = await res.json();
 
         const transformed = (data as ApiProduct[]).map((p: ApiProduct) => {

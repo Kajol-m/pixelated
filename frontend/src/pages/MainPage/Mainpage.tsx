@@ -7,10 +7,11 @@ import ShopMenu from "./ShopMenu";
 import TrendingItems from "./TrendingItems";
 
 const Homepage:React.FC=()=>{
+    
     return(
         <>
         <Header/>
-        <div className="pt-[81px]"></div>
+        <div className="lg:pt-[81px] pt-[118px]"></div>
         <Banner/>
         <ShopMenu/>
         <Collection/>

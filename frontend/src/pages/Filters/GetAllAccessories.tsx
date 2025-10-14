@@ -35,7 +35,7 @@ const GetAllAccessories: React.FC = () => {
     const fetchProducts = async () => {
       try {
         const res = await fetch(
-          `http://localhost:5000/api/products/accessories`
+          `https://pixelated-node-2.onrender.com/api/products/accessories`
         );
         const data = await res.json();
 

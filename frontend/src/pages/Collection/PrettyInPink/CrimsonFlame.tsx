@@ -22,7 +22,7 @@ const CrimsonFlame: React.FC = () => {
     const fetchProducts = async () => {
       try {
         const res = await fetch(
-          `http://localhost:5000/api/products/collections/${collectionId}`
+          `https://pixelated-node-2.onrender.com/api/products/collections/${collectionId}`
         );
         const data = await res.json();
 

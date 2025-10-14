@@ -98,7 +98,7 @@ const Login = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/users/login",
+        "https://pixelated-node-2.onrender.com/api/users/login",
         {
           email: formData.email,
           password: formData.password,
@@ -111,7 +111,6 @@ const Login = () => {
       localStorage.setItem("User", JSON.stringify(response.data.user));
       localStorage.setItem("token", response.data.token);
       localStorage.setItem("isLogin", "true");
-
       navigate("/");
     } catch (err) {
       if (typeof err === "object" && err !== null && "response" in err) {
