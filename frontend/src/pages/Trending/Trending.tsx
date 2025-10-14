@@ -23,7 +23,7 @@ const Trending: React.FC = () => {
     const fetchProducts = async () => {
       try {
         const res = await fetch(
-          `http://localhost:5000/api/trending/trending`
+          `https://pixelated-node-2.onrender.com/api/trending/trending`
         );
         const data = await res.json();
 

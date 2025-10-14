@@ -34,7 +34,7 @@ const GetAllSkirts: React.FC = () => {
     const fetchProducts = async () => {
       try {
         const res = await fetch(
-          `http://localhost:5000/api/products/skirts`
+          `https://pixelated-node-2.onrender.com/api/products/skirts`
         );
         const data = await res.json();
 

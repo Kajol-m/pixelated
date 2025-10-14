@@ -38,7 +38,7 @@ const ImageDetails: React.FC = () => {
 
     const fetchImages = async () => {
       try {
-        const res = await fetch(`http://localhost:5000/api/products/${id}/images`);
+        const res = await fetch(`https://pixelated-node-2.onrender.com/api/products/${id}/images`);
         const data = await res.json();
 
         if (data && data.length > 0) {

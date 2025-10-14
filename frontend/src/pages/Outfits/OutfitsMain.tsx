@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 interface OutfitsMainProps {
   subCategory?: string;
 }
-const OutfitsMain:React.FC<OutfitsMainProps>=({subCategory})=>{
+const OutfitsMain: React.FC<OutfitsMainProps> = ({ subCategory }) => {
   const [productName, setProductName] = useState("WOMEN'S CLOTHING");
 
   useEffect(() => {
@@ -21,21 +21,24 @@ const OutfitsMain:React.FC<OutfitsMainProps>=({subCategory})=>{
     else if (subCategory === "skirts") setProductName("SHOP SKIRTS");
     else if (subCategory === "bestsellers") setProductName("SHOP BESTSELLERS");
     else if (subCategory === "trending") setProductName("SHOP TRENDING");
+    else if (subCategory === "wishlist") setProductName("WISHLIST");
     else setProductName("WOMEN'S CLOTHING"); // default
   }, [subCategory]);
 
-    return(
-        <>
-        <div className="flex flex-col justify-center items-center  border-b-1 border-t-1 border-gray-300 pt-[90px]">
-            <hr className="border-gray-300 h-px w-full" />
-            <p className="text-3xl text-black pb-8 pt-[50px] text-center ">{productName}</p>
-            {/* <div className="flex gap-[100px] pb-8">
+  return (
+    <>
+      <div className="flex flex-col justify-center items-center  border-b-1 border-t-1 border-gray-300 lg:pt-[90px] pt-[118px]">
+        <hr className="border-gray-300 h-px w-full" />
+        <p className="text-3xl text-black lg:pb-8 pb-4 lg:pt-[35px] pt-[15px] text-center ">
+          {productName}
+        </p>
+        {/* <div className="flex gap-[100px] pb-8">
                 <Button variant="primary" onClick={()=>{}} >SHOP T-SHIRT</Button>
                 <Button variant="primary" onClick={()=>{}} >SHOP TOPS</Button>
                 <Button variant="primary" onClick={()=>{}} >SHOP SKIRT</Button>
             </div> */}
-        </div>
-        </>
-    )
-}
+      </div>
+    </>
+  );
+};
 export default OutfitsMain;

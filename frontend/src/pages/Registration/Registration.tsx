@@ -153,7 +153,7 @@ const Registration: React.FC = () => {
   if (!isValid) return;
 
   try {
-    const response = await axios.post("http://localhost:5000/api/users/register", {
+    const response = await axios.post("https://pixelated-node-2.onrender.com/api/users/register", {
       user_name: formData.fullName,   // backend expects user_name
       email: formData.email,
       password: formData.password,
