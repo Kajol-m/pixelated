@@ -35,10 +35,10 @@ const ImageDetails: React.FC = () => {
 
   useEffect(() => {
     if (!id) return;
-
+    const baseUrl = import.meta.env.VITE_API_URL;
     const fetchImages = async () => {
       try {
-        const res = await fetch(`https://pixelated-node-2.onrender.com/api/products/${id}/images`);
+        const res = await fetch(`${baseUrl}/api/products/${id}/images`);
         const data = await res.json();
 
         if (data && data.length > 0) {
@@ -55,30 +55,30 @@ const ImageDetails: React.FC = () => {
 
   return (
     <>
-    <div className="hidden lg:flex flex-row gap-6">
-      {/* Thumbnails */}
-      <div className="flex flex-col gap-6 w-[75px] overflow-y-auto ">
-        {images.map((img) => (
-          <img
-            key={img.image_id}
-            src={img.image_url}
-            alt={img.image_alt_text || "product image"}
-            className="cursor-pointer border hover:border-black"
-            onClick={() => setMainImage(img.image_url)}
-          />
-        ))}
-      </div>
+      <div className="hidden lg:flex flex-row gap-8">
+        {/* Thumbnails */}
+        <div className="flex flex-col gap-6 w-[100px] overflow-y-auto ">
+          {images.map((img) => (
+            <img
+              key={img.image_id}
+              src={img.image_url}
+              alt={img.image_alt_text || "product image"}
+              className="cursor-pointer border border-gray-300 hover:border-black"
+              onClick={() => setMainImage(img.image_url)}
+            />
+          ))}
+        </div>
 
-      {/* Main image */}
-      <div className="w-3/4">
-        {mainImage && (
-          <img src={mainImage} alt="Main product" className="w-full h-auto" />
-        )}
+        {/* Main image */}
+        <div className="w-full">
+          {mainImage && (
+            <img src={mainImage} alt="Main product" className="w-full h-auto" />
+          )}
+        </div>
       </div>
-    </div>
-    <div className="block lg:hidden w-full">
+      <div className="block lg:hidden w-full">
         <Swiper
-          modules={[ Pagination]}
+          modules={[Pagination]}
           navigation
           pagination={{ clickable: true }}
           spaceBetween={10}

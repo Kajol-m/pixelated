@@ -13,19 +13,19 @@ const Button: React.FC<ButtonProps> = ({
   const getButtonClass = (variant: ButtonVariant) => {
     switch (variant) {
       case "primary":
-        return "bg-white lg:text-md md:text-sm text-xs border border-black lg:py-2 py-1 lg:px-5 px-2 hover:underline underline-offset-4 decoration-1 whitespace-nowrap";
+        return "bg-white lg:text-md md:text-sm text-xs border border-black lg:py-2 py-1 lg:px-5 px-2 hover:underline underline-offset-4 decoration-1 whitespace-nowrap cursor-pointer";
       case "secondary":
-        return "bg-black text-white pt-2 pb-2 pl-5 pr-5 hover:underline underline-offset-4 decoration-1";
+        return "bg-black text-white pt-2 pb-2 pl-5 pr-5 hover:underline underline-offset-4 decoration-1 cursor-pointer";
 
       //return 'bg-white border border-black pt-2 pb-2 pl-5 pr-5 hover:underline underline-offset-4 decoration-1';
       case "signup-signin":
-        return "bg-black text-white pt-2 pb-2 pl-5 pr-5 hover:bg-gray-600";
+        return "bg-black text-white pt-2 pb-2 pl-5 pr-5 hover:bg-gray-600 cursor-pointer";
       case "size-select":
-        return "bg-white border font-bold border-black pt-2 pb-2 pl-5 pr-5 hover:bg-gray-200";
+        return "bg-white border font-bold border-black pt-2 pb-2 pl-5 pr-5 hover:bg-gray-200 cursor-pointer";
       case "user-dropdown":
-        return "bg-white border border-black text-sm font-semibold pt-2 pb-2 pl-5 pr-5 hover:bg-gray-200";
+        return "bg-white border border-black text-sm font-semibold pt-2 pb-2 pl-5 pr-5 hover:bg-gray-200 cursor-pointer";
       case "size-active":
-        return "bg-black text-white font-bold pt-2 pb-2 pl-5 pr-5 ";
+        return "bg-black text-white font-bold pt-2 pb-2 pl-5 pr-5 cursor-pointer ";
 
       default:
         return "";

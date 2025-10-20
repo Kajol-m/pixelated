@@ -1,19 +1,22 @@
 import { Link } from "react-router-dom";
 import Button from "../../common/Button/Button";
 import { useEffect, useState } from "react";
-
+import { Skeleton } from "@/components/ui/skeleton";
 
 const Collection: React.FC = () => {
   const [prettyInPink, setPrettyInPink] = useState<string | null>(null);
   const [denimDusk, setDenimDusk] = useState<string | null>(null);
   const [desertGlow, setDesertGlow] = useState<string | null>(null);
   const [crimsonFlame, setCrimsonFlame] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
 
+  const baseUrl = import.meta.env.VITE_API_URL;
   useEffect(() => {
     const getPrettyInPinkImage = async () => {
       try {
+        setLoading(true);
         const res = await fetch(
-          `https://pixelated-node-2.onrender.com/api/products/collectionimage/PrettyInPink`
+          `${baseUrl}/api/products/collectionimage/PrettyInPink`
         );
         const data = await res.json();
 
@@ -22,6 +25,8 @@ const Collection: React.FC = () => {
         }
       } catch (err) {
         console.error("Error fetching product images:", err);
+      } finally {
+        setLoading(false);
       }
     };
     getPrettyInPinkImage();
@@ -30,8 +35,9 @@ const Collection: React.FC = () => {
   useEffect(() => {
     const getDenimDuskImage = async () => {
       try {
+        setLoading(true);
         const res = await fetch(
-          `https://pixelated-node-2.onrender.com/api/products/collectionimage/DenimDusk`
+          `${baseUrl}/api/products/collectionimage/DenimDusk`
         );
         const data = await res.json();
 
@@ -40,6 +46,8 @@ const Collection: React.FC = () => {
         }
       } catch (err) {
         console.error("Error fetching product images:", err);
+      } finally {
+        setLoading(false);
       }
     };
     getDenimDuskImage();
@@ -48,8 +56,9 @@ const Collection: React.FC = () => {
   useEffect(() => {
     const getDesertGlowImage = async () => {
       try {
+        setLoading(true);
         const res = await fetch(
-          `https://pixelated-node-2.onrender.com/api/products/collectionimage/DesertGlow`
+          `${baseUrl}/api/products/collectionimage/DesertGlow`
         );
         const data = await res.json();
 
@@ -58,6 +67,8 @@ const Collection: React.FC = () => {
         }
       } catch (err) {
         console.error("Error fetching product images:", err);
+      } finally {
+        setLoading(false);
       }
     };
     getDesertGlowImage();
@@ -66,8 +77,9 @@ const Collection: React.FC = () => {
   useEffect(() => {
     const getCrimsonFlameImage = async () => {
       try {
+        setLoading(true);
         const res = await fetch(
-          `https://pixelated-node-2.onrender.com/api/products/collectionimage/CrimsonFlame`
+          `${baseUrl}/api/products/collectionimage/CrimsonFlame`
         );
         const data = await res.json();
 
@@ -76,20 +88,28 @@ const Collection: React.FC = () => {
         }
       } catch (err) {
         console.error("Error fetching product images:", err);
+      } finally {
+        setLoading(false);
       }
     };
     getCrimsonFlameImage();
   }, []);
 
   return (
-    <div className="grid lg:grid-cols-4 grid-cols-2 ">
+    <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 cursor-pointer ">
       <div className="relative">
-        <img
-          src={prettyInPink ?? undefined}
-        //   src="/Pink-bow-top.webp"
-          alt="Coquette-Collection"
-          className="w-full h-full object-cover"
-        />
+        {loading ? (
+          <Skeleton className="w-full h-full" />
+        ) : (
+          <Link to={`/collections/COL00000001`}>
+            <img
+              src={prettyInPink ?? undefined}
+              alt="Coquette-Collection"
+              loading="lazy"
+              className="w-full h-full object-cover"
+            />
+          </Link>
+        )}
         <Link to={`/collections/COL00000001`}>
           <Button
             variant="primary"
@@ -101,12 +121,18 @@ const Collection: React.FC = () => {
         </Link>
       </div>
       <div className="relative">
-        <img
-          src={denimDusk ?? undefined}
-        // src="/White-hoodie.webp"
-          alt="Coquette-Collection"
-          className="w-full h-full object-cover"
-        />
+        {loading ? (
+          <Skeleton className="w-full h-full" />
+        ) : (
+          <Link to={`/collections/COL00000002`}>
+            <img
+              src={denimDusk ?? undefined}
+              alt="Coquette-Collection"
+              loading="lazy"
+              className="w-full h-full object-cover"
+            />
+          </Link>
+        )}
         <Link to={`/collections/COL00000002`}>
           <Button
             variant="primary"
@@ -118,11 +144,18 @@ const Collection: React.FC = () => {
         </Link>
       </div>
       <div className="relative">
-        <img
-          src={desertGlow ?? undefined}
-          alt="Coquette-Collection"
-          className="w-full h-full object-cover"
-        />
+        {loading ? (
+          <Skeleton className="w-full h-full" />
+        ) : (
+          <Link to={`/collections/COL00000003`}>
+            <img
+              src={desertGlow ?? undefined}
+              alt="Coquette-Collection"
+              loading="lazy"
+              className="w-full h-full object-cover"
+            />
+          </Link>
+        )}
         <Link to={`/collections/COL00000003`}>
           <Button
             variant="primary"
@@ -134,11 +167,18 @@ const Collection: React.FC = () => {
         </Link>
       </div>
       <div className="relative">
-        <img
-          src={crimsonFlame ?? undefined}
-          alt="Coquette-Collection"
-          className="w-full h-full object-cover"
-        />
+        {loading ? (
+          <Skeleton className="w-full h-full" />
+        ) : (
+          <Link to={`/collections/COL00000004`}>
+            <img
+              src={crimsonFlame ?? undefined}
+              alt="Coquette-Collection"
+              loading="lazy"
+              className="w-full h-full object-cover"
+            />
+          </Link>
+        )}
         <Link to={`/collections/COL00000004`}>
           <Button
             variant="primary"

@@ -8,12 +8,12 @@ import ShoppingCart from "./pages/Shopping-cart/ShoppingCart";
 import CollectionPage from "./pages/Collection/PrettyInPink/CollectionPage";
 import Trending from "./pages/Trending/Trending";
 import Bestseller from "./pages/Bestseller/Bestseller";
-import GetAllTops from "./pages/Filters/GetAllTops";
-import GetAllBottoms from "./pages/Filters/GetAllBottoms";
-import GetAllSkirts from "./pages/Filters/GetAllSkirts";
-import GetAllDresses from "./pages/Filters/GetAllDresses";
-import GetAllAccessories from "./pages/Filters/GetAllAccessories";
-import GetAllClothing from "./pages/Filters/GetAllClothing";
+import GetAllTops from "./pages/Category/GetAllTops";
+import GetAllBottoms from "./pages/Category/GetAllBottoms";
+import GetAllSkirts from "./pages/Category/GetAllSkirts";
+import GetAllDresses from "./pages/Category/GetAllDresses";
+import GetAllAccessories from "./pages/Category/GetAllAccessories";
+import GetAllClothing from "./pages/Category/GetAllClothing";
 import Profile from "./pages/Profile/Profile";
 import { WishlistProvider } from "./hooks/WishlistProvider";
 import Wishlist from "./pages/Wishlist/Wishlist";
@@ -21,6 +21,7 @@ import ScrollToTop from "./hooks/ScrollToTop";
 import { Toaster } from "sonner";
 import ErrorBoundary from "./pages/ErrorBoundary/ErrorBoundary";
 import NotFound from "./pages/ErrorBoundary/NotFound";
+import Category from "./pages/Category/Category";
 // import CrashTest from "./pages/ErrorBoundary/CrashTest";
 function App() {
   return (
@@ -57,6 +58,7 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/wishlist" element={<Wishlist />} />
           <Route path="*" element={<NotFound/>}/>
+          <Route path="/category" element={<Category/>}/>
           {/* <Route path="/crash" element={<CrashTest />} /> 👈 test route */}
         </Routes>
       </WishlistProvider>

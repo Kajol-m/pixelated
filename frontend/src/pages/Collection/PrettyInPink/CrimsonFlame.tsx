@@ -3,6 +3,7 @@ import Filter from "../../../common/Filter/Filter";
 import Footer from "../../../common/Footer/Footer";
 import Header from "../../../common/Header/Header";
 import ItemCard from "../../../common/ItemCard/ItemCard";
+import { ItemCardSkeleton } from "@/common/ItemCard/ItemCardSkeleton";
 // import OutfitsMain from "../../Outfits/OutfitsMain";
 
 interface Product {
@@ -14,15 +15,20 @@ interface Product {
 }
 const CrimsonFlame: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+
   const collectionId = "COL00000004";
+  const baseUrl = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     if (!collectionId) return;
 
     const fetchProducts = async () => {
       try {
+        setLoading(true);
+        //await new Promise((resolve) => setTimeout(resolve, 5000));
         const res = await fetch(
-          `https://pixelated-node-2.onrender.com/api/products/collections/${collectionId}`
+          `${baseUrl}/api/products/collections/${collectionId}`
         );
         const data = await res.json();
 
@@ -40,9 +46,11 @@ const CrimsonFlame: React.FC = () => {
 
         const transformed = (data as ApiProduct[]).map((p: ApiProduct) => {
           const primary =
-            p.images.find((img: ApiImage) => img.display_order === 1)?.url || "";
+            p.images.find((img: ApiImage) => img.display_order === 1)?.url ||
+            "";
           const hover =
-            p.images.find((img: ApiImage) => img.display_order === 2)?.url || "";
+            p.images.find((img: ApiImage) => img.display_order === 2)?.url ||
+            "";
 
           return {
             id: p.product_id,
@@ -56,6 +64,8 @@ const CrimsonFlame: React.FC = () => {
         setProducts(transformed);
       } catch (err) {
         console.error("Error fetching products:", err);
+      } finally {
+        setLoading(false); // stop skeletons
       }
     };
 
@@ -67,18 +77,22 @@ const CrimsonFlame: React.FC = () => {
       <div className="">
         <Header />
         {/* <OutfitsMain /> */}
-        <Filter />
-        <div className="grid lg:grid-cols-4 grid-cols-2 lg:gap-6 md:gap-5 gap-4 lg:px-8 lg:pb-8 md:px-8 md:pb-6 pb-4 px-4">
-          {products.map((product) => (
-            <ItemCard
-              id={product.id}
-              key={product.id}
-              imgUrl={product.image}
-              imgHoverUrl={product.hover_image}
-              title={product.name}
-              price={`$ ${product.price}`}
-            />
-          ))}
+        <Filter filters={["Tops","Bottom","Accessories"]}/>
+        <div className="grid lg:grid-cols-4 grid-cols-2 lg:gap-6 md:gap-5 lg:px-8 lg:pb-8 md:px-8 md:pb-6 pb-4 px-2">
+          {loading
+            ? Array.from({ length: 8 }).map((_, i) => (
+                <ItemCardSkeleton key={i} />
+              ))
+            : products.map((product) => (
+                <ItemCard
+                  id={product.id}
+                  key={product.id}
+                  imgUrl={product.image}
+                  imgHoverUrl={product.hover_image}
+                  title={product.name}
+                  price={`$ ${product.price}`}
+                />
+              ))}
         </div>
         <Footer />
       </div>

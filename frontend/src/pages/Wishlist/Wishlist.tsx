@@ -4,6 +4,7 @@ import Footer from "@/common/Footer/Footer";
 import ItemCard from "@/common/ItemCard/ItemCard";
 import Filter from "@/common/Filter/Filter";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface ProductImage {
   url: string;
@@ -27,24 +28,60 @@ interface Product {
 
 const Wishlist: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
+  const navigate=useNavigate();
 
   const user = JSON.parse(localStorage.getItem("User") || "{}");
+  let token = localStorage.getItem("token");
   const userId = user.user_id;
 
+  useEffect(() => {
+
+    if (!user.user_id || !token) {
+      // redirect to login
+      navigate("/login");
+    }
+  }, [navigate]);
   useEffect(() => {
     if (!userId) return;
 
     const fetchProducts = async () => {
-      const user = JSON.parse(localStorage.getItem("User") || "{}");
-      const token = localStorage.getItem("token");
-      if (!user.user_id || !token) return;
+      const baseUrl = import.meta.env.VITE_API_URL;
       try {
-        const res = await fetch(
-          `https://pixelated-node-2.onrender.com/api/users/wishlistProducts/${user.user_id}`,
+        let res = await fetch(
+          `${baseUrl}/api/users/wishlistProducts/${user.user_id}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
         );
+
+        if (res.status === 401) {
+          const refreshRes = await fetch(`${baseUrl}/api/users/refresh-token`, {
+            method: "GET",
+            credentials: "include", // send httpOnly cookie
+          });
+
+          if (!refreshRes.ok) {
+            // refresh token expired → logout
+            localStorage.removeItem("accessToken");
+            localStorage.removeItem("User");
+            localStorage.removeItem("isLogin");
+            window.location.href = "/login";
+            return;
+          }
+
+          const refreshData = await refreshRes.json();
+          token = refreshData.accessToken;
+          if (token) {
+            localStorage.setItem("accessToken", token);
+          } else {
+            localStorage.removeItem("accessToken");
+          }
+
+          // Retry the wishlist request
+          res = await fetch(`${baseUrl}/api/users/wishlistProducts/${userId}`, {
+            headers: { Authorization: `Bearer ${token}` },
+          });
+        }
         const response = await res.json();
         const data: ProductApi[] = response.wishlist || [];
 
@@ -76,21 +113,27 @@ const Wishlist: React.FC = () => {
   return (
     <>
       <Header />
-      {/* <div className="pt-[85px]"></div> */}
       <OutfitsMain subCategory={"wishlist"} />
-      <Filter />
+      <Filter filters={["Tops","Bottom","Accessories"]}/>
       <div className="grid lg:grid-cols-4 grid-cols-2 lg:gap-6 md:gap-5 gap-4 lg:px-8 lg:pb-8 md:px-8 md:pb-6 pb-4 px-4">
-        {products.map((product) => (
-          <ItemCard
-            id={product.id}
-            key={product.id}
-            imgUrl={product.image}
-            imgHoverUrl={product.hover_image}
-            title={product.name}
-            price={`$ ${product.price}`}
-          />
-        ))}
-      </div>
+  {products.length === 0 ? (
+    <p className="col-span-full text-center text-xl text-gray-800 lg:py-[160px] md:py-[100px] px-8">
+      Your wishlist is empty
+    </p>
+  ) : (
+    products.map((product) => (
+      <ItemCard
+        id={product.id}
+        key={product.id}
+        imgUrl={product.image}
+        imgHoverUrl={product.hover_image}
+        title={product.name}
+        price={`$ ${product.price}`}
+      />
+    ))
+  )}
+</div>
+
       <Footer />
     </>
   );
