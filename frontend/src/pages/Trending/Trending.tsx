@@ -4,6 +4,7 @@ import Footer from "@/common/Footer/Footer";
 import Header from "@/common/Header/Header";
 import ItemCard from "@/common/ItemCard/ItemCard";
 import OutfitsMain from "@/pages/Outfits/OutfitsMain";
+import { ItemCardSkeleton } from "@/common/ItemCard/ItemCardSkeleton";
 
 interface Product {
   id: string;
