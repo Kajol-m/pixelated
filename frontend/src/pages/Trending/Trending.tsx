@@ -14,17 +14,16 @@ interface Product {
 }
 const Trending: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
-  const path = window.location.pathname; 
-      const parts = path.split("/");
-      const categoryName = parts[1]; 
-
+  const [loading,setLoading]=useState(true);
+  const path = window.location.pathname;
+  const parts = path.split("/");
+  const categoryName = parts[1];
+  const baseUrl = import.meta.env.VITE_API_URL;
   useEffect(() => {
-
     const fetchProducts = async () => {
       try {
-        const res = await fetch(
-          `https://pixelated-node-2.onrender.com/api/trending/trending`
-        );
+        setLoading(true);
+        const res = await fetch(`${baseUrl}/api/trending/trending`);
         const data = await res.json();
 
         interface ApiImage {
@@ -41,9 +40,11 @@ const Trending: React.FC = () => {
 
         const transformed = (data as ApiProduct[]).map((p: ApiProduct) => {
           const primary =
-            p.images.find((img: ApiImage) => img.display_order === 1)?.url || "";
+            p.images.find((img: ApiImage) => img.display_order === 1)?.url ||
+            "";
           const hover =
-            p.images.find((img: ApiImage) => img.display_order === 2)?.url || "";
+            p.images.find((img: ApiImage) => img.display_order === 2)?.url ||
+            "";
 
           return {
             id: p.product_id,
@@ -58,6 +59,9 @@ const Trending: React.FC = () => {
       } catch (err) {
         console.error("Error fetching products:", err);
       }
+      finally{
+        setLoading(false);
+      }
     };
 
     fetchProducts();
@@ -68,18 +72,22 @@ const Trending: React.FC = () => {
       <div className="">
         <Header />
         <OutfitsMain subCategory={categoryName} />
-        <Filter />
+        <Filter filters={["Tops","Bottom","Accessories"]}/>
         <div className="grid lg:grid-cols-4 grid-cols-2 lg:gap-6 md:gap-5 gap-4 lg:px-8 lg:pb-8 md:px-8 md:pb-6 pb-4 px-4">
-          {products.map((product) => (
-            <ItemCard
-              id={product.id}
-              key={product.id}
-              imgUrl={product.image}
-              imgHoverUrl={product.hover_image}
-              title={product.name}
-              price={`$ ${product.price}`}
-            />
-          ))}
+          {loading
+            ? Array.from({ length: 8 }).map((_, i) => (
+                <ItemCardSkeleton key={i} />
+              ))
+            : products.map((product) => (
+                <ItemCard
+                  id={product.id}
+                  key={product.id}
+                  imgUrl={product.image}
+                  imgHoverUrl={product.hover_image}
+                  title={product.name}
+                  price={`$ ${product.price}`}
+                />
+              ))}
         </div>
         <Footer />
       </div>

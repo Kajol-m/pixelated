@@ -10,7 +10,7 @@ const Outfits: React.FC = () => {
       <div className="">
         <Header />
         <OutfitsMain />
-        <Filter />
+        <Filter filters={["Tops","Bottom","Accessories"]} />
         <div className="flex px-8">
           <ItemCard
             id={"1"}

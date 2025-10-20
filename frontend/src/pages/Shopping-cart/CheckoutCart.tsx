@@ -39,9 +39,9 @@ const CheckoutCart: React.FC = () => {
           </Button>
         </div>
         {/* <hr className=" border-gray-300 mt-4" /> */}
-        <div className="hidden">
+        {/* <div className="hidden">
           <p>PROMO CODE</p>
-        </div>
+        </div> */}
       </div>
     </div>
   );

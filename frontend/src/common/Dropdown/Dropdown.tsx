@@ -30,7 +30,7 @@ const Dropdown: React.FC<DropdownProps> = ({ title }) => {
         className="relative border border-gray-300 pt-2 pb-3 pr-5 w-[150px] text-left"
         onClick={onDropdownClick}
       >
-        <div>{title}</div>
+        <div className="pl-4">{title}</div>
         <RiArrowDropDownLine className="absolute right-3 top-1/2 transform -translate-y-1/2 text-xl" />
       </button>
 

@@ -119,67 +119,47 @@ const Registration: React.FC = () => {
     }));
   };
   const handleBlur = (fieldName: keyof RegistrationProps) => () => {
-    setVisitedFields(prev => new Set(prev).add(fieldName as string));
+    setVisitedFields((prev) => new Set(prev).add(fieldName as string));
     setErrors(validateForm(formData));
   };
 
-  // const handleSubmit = (e: React.FormEvent) => {
-  //   e.preventDefault();
-
-  //   const newErrors = validateForm(formData, true);
-  //   setErrors(newErrors);
-
-  //   const isValid = Object.values(newErrors).every((error) => error === "");
-
-  //   if (isValid) {
-  //     const newUser = {
-  //       fullName: formData.fullName,
-  //       email: formData.email,
-  //       password: formData.password,
-  //     };
-  //     console.log(newUser);
-  //     localStorage.setItem("User", JSON.stringify(newUser));
-  //     navigate("/login");
-  //   }
-  // };
   const handleSubmit = async (e: React.FormEvent) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  const newErrors = validateForm(formData, true);
-  setErrors(newErrors);
+    const newErrors = validateForm(formData, true);
+    setErrors(newErrors);
 
-  const isValid = Object.values(newErrors).every((error) => error === "");
+    const isValid = Object.values(newErrors).every((error) => error === "");
 
-  if (!isValid) return;
+    if (!isValid) return;
+    const baseUrl = import.meta.env.VITE_API_URL;
+    try {
+      const response = await axios.post(`${baseUrl}/api/users/register`, {
+        user_name: formData.fullName, // backend expects user_name
+        email: formData.email,
+        password: formData.password,
+      });
 
-  try {
-    const response = await axios.post("https://pixelated-node-2.onrender.com/api/users/register", {
-      user_name: formData.fullName,   // backend expects user_name
-      email: formData.email,
-      password: formData.password,
-    });
+      console.log("✅ Registered:", response.data);
 
-    console.log("✅ Registered:", response.data);
+      // You probably don’t want to save password in localStorage!
+      // Instead save token or just navigate
+      localStorage.setItem("User", JSON.stringify(response.data.user));
 
-    // You probably don’t want to save password in localStorage!
-    // Instead save token or just navigate
-    localStorage.setItem("User", JSON.stringify(response.data.user));
-
-    navigate("/login");
-
-  } catch (err) {
-    if (axios.isAxiosError(err) && err.response) {
-      console.error("❌ API Error:", err.response.data);
-      alert(err.response.data.message || "Registration failed");
-    } else if (err instanceof Error) {
-      console.error("❌ Network Error:", err.message);
-      alert("Server not reachable");
-    } else {
-      console.error("❌ Unknown Error:", err);
-      alert("An unexpected error occurred");
+      navigate("/login");
+    } catch (err) {
+      if (axios.isAxiosError(err) && err.response) {
+        console.error("❌ API Error:", err.response.data);
+        alert(err.response.data.message || "Registration failed");
+      } else if (err instanceof Error) {
+        console.error("❌ Network Error:", err.message);
+        alert("Server not reachable");
+      } else {
+        console.error("❌ Unknown Error:", err);
+        alert("An unexpected error occurred");
+      }
     }
-  }
-};
+  };
 
   //moves key from one input field to another on Pressing Enter
   const handleKeyDown = (e: React.KeyboardEvent<HTMLFormElement>) => {

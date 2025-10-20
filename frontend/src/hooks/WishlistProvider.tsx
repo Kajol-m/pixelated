@@ -3,7 +3,7 @@ import { WishlistContext } from "./WishlistContext";
 
 export const WishlistProvider = ({ children }: { children: React.ReactNode }) => {
   const [wishlist, setWishlist] = useState<string[]>([]);
-
+  const baseUrl = import.meta.env.VITE_API_URL;
   // Load from localStorage first (instant UI)
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("User") || "{}");
@@ -17,20 +17,53 @@ export const WishlistProvider = ({ children }: { children: React.ReactNode }) =>
   // Fetch from backend (sync latest)
   useEffect(() => {
     const fetchWishlist = async () => {
-      const user = JSON.parse(localStorage.getItem("User") || "{}");
-      const token = localStorage.getItem("token");
-      if (!user.user_id || !token) return;
+  const user = JSON.parse(localStorage.getItem("User") || "{}");
+  let token = localStorage.getItem("token"); // updated name
 
-      try {
-        const res = await fetch(`https://pixelated-node-2.onrender.com/api/users/wishlist/${user.user_id}`, {
-          headers: { "Authorization": `Bearer ${token}` },
-        });
-        const data = await res.json();
-        setWishlist(data.wishlist || []);
-      } catch (err) {
-        console.error("Error fetching wishlist:", err);
+  if (!user.user_id) return;
+
+  try {
+    let res = await fetch(`${baseUrl}/api/users/wishlist/${user.user_id}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    // If access token expired → refresh it
+    if (res.status === 401 || res.status === 403) {
+      const refreshRes = await fetch(`${baseUrl}/api/users/refresh-token`, {
+        method: "GET",
+        credentials: "include", // send httpOnly refresh token cookie
+      });
+
+      if (!refreshRes.ok) {
+        // refresh token expired → logout
+        localStorage.removeItem("User");
+        localStorage.removeItem("token");
+        localStorage.removeItem("isLogin");
+        setWishlist([]);
+        return;
       }
-    };
+
+      const refreshData = await refreshRes.json();
+      token = refreshData.accessToken;
+      if (token) {
+            localStorage.setItem("token", token);
+          } else {
+            localStorage.removeItem("token");
+          }
+
+      // retry wishlist request
+      res = await fetch(`${baseUrl}/api/users/wishlist/${user.user_id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+    }
+
+    const data = await res.json();
+    setWishlist(data.wishlist || []);
+  } catch (err) {
+    console.error("Error fetching wishlist:", err);
+  }
+};
+
     fetchWishlist();
   }, []);
 
@@ -59,7 +92,7 @@ export const WishlistProvider = ({ children }: { children: React.ReactNode }) =>
 
     try {
       const method = isAlreadyWishlisted ? "DELETE" : "POST";
-      await fetch(`https://pixelated-node-2.onrender.com/api/users/toggleWishlist`, {
+      await fetch(`${baseUrl}/api/users/toggleWishlist`, {
         method,
         headers: {
           "Content-Type": "application/json",

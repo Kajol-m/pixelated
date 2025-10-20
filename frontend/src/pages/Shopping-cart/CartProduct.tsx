@@ -65,23 +65,20 @@ const CartProduct: React.FC = () => {
       const token = localStorage.getItem("token");
       const user = JSON.parse(localStorage.getItem("User") || "{}");
       const user_id = user.user_id;
-
+      const baseUrl = import.meta.env.VITE_API_URL;
       if (!token || !user_id) {
         toast.error("Please login first!");
         return;
       }
 
       try {
-        const res = await fetch(
-          `https://pixelated-node-2.onrender.com/api/getCart`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        const res = await fetch(`${baseUrl}/api/getCart`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
         const data = await res.json();
         if (!data.result || !Array.isArray(data.result)) {
@@ -118,13 +115,13 @@ const CartProduct: React.FC = () => {
 
     getCartProducts();
   }, []);
-  
+
   return (
     <div className="flex flex-col gap-4">
       {cartItems.map((item) => (
         <div
           key={item.order_item_id}
-          className="flex flex-row pb-8 pt-8 mr-8 ml-8 border-b border-gray-300 relative"
+          className="flex flex-row pb-8 pt-8 lg:mx-8 md:mx-6 mx-4 border-b border-gray-300 relative"
         >
           <div className="w-[150px]">
             <img src={item.image_url} alt={item.product_name} />

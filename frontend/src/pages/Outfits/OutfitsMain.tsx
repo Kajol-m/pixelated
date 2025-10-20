@@ -27,7 +27,7 @@ const OutfitsMain: React.FC<OutfitsMainProps> = ({ subCategory }) => {
 
   return (
     <>
-      <div className="flex flex-col justify-center items-center  border-b-1 border-t-1 border-gray-300 lg:pt-[90px] pt-[118px]">
+      <div className="flex flex-col justify-center items-center  border-b-1 border-t-1 border-gray-300 lg:pt-[90px] pt-[75px]">
         <hr className="border-gray-300 h-px w-full" />
         <p className="text-3xl text-black lg:pb-8 pb-4 lg:pt-[35px] pt-[15px] text-center ">
           {productName}

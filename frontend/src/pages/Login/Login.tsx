@@ -95,31 +95,27 @@ const Login = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
+    const baseUrl = import.meta.env.VITE_API_URL;
     try {
-      const response = await axios.post(
-        "https://pixelated-node-2.onrender.com/api/users/login",
-        {
-          email: formData.email,
-          password: formData.password,
-        }
-      );
+      const response = await axios.post(`${baseUrl}/api/users/login`, {
+        email: formData.email,
+        password: formData.password,
+      }, { withCredentials: true });
 
       console.log("✅ Logged in:", response.data);
 
       // Store JWT token for authentication
       localStorage.setItem("User", JSON.stringify(response.data.user));
-      localStorage.setItem("token", response.data.token);
+      localStorage.setItem("token", response.data.accessToken);
       localStorage.setItem("isLogin", "true");
       navigate("/");
     } catch (err) {
-      if (typeof err === "object" && err !== null && "response" in err) {
-        // Type assertion to access err.response safely
-        const errorResponse = err as { response?: { data?: { message?: string } } };
-        alert(errorResponse.response?.data?.message || "Login failed");
-      } else {
-        alert("Server not reachable");
-      }
+    if (axios.isAxiosError(err)) {
+      alert(err.response?.data?.message || "Login failed");
+      console.log(err.response?.data?.message)
+    } else {
+      alert("Server not reachable");
+    }
     }
   };
 
@@ -142,8 +138,8 @@ const Login = () => {
   };
 
   return (
-    <div className="flex items-center justify center h-screen items-center justify-center h-screen bg-gray-300">
-      <div className=" relative w-full max-w-md p-[50px] bg-white m-8 shadow-lg">
+    <div className="flex items-center justify center h-screen items-center justify-center h-screen bg-gray-300 ">
+      <div className=" relative w-full max-w-md p-[50px] bg-white m-8 shadow-lg cursor-pointer">
         {/* <div className="absolute right-[25px] top-[25px] pb-5"><RxCross2 /></div> */}
         <button
           onClick={() => navigate("/")}
@@ -195,7 +191,7 @@ const Login = () => {
             <Button
               variant="signup-signin"
               onClick={() => console.log("Login")}
-              className="pl-[50px] pr-[50px] w-full"
+              className="pl-[50px] pr-[50px] w-full  cursor-pointer"
             >
               Sign In
             </Button>
@@ -207,7 +203,7 @@ const Login = () => {
             <Button
               variant="primary"
               onClick={() => console.log("Sign-up")}
-              className="pl-[50px] pr-[50px]"
+              className="pl-[50px] pr-[50px]  cursor-pointer"
             >
               Sign Up
             </Button>
