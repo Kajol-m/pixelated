@@ -3,7 +3,6 @@ import { IoSearchSharp } from "react-icons/io5";
 import { FaHeart, FaUser, FaShoppingCart } from "react-icons/fa";
 import { useState } from "react";
 import UserDropdown from "../Dropdown/UserDropdown";
-import { FaBars } from "react-icons/fa6";
 
 import { GoHomeFill } from "react-icons/go";
 import { BiSolidCategory } from "react-icons/bi";
