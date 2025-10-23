@@ -50,12 +50,12 @@ const ItemCard: React.FC<ItemCardsProps> = ({
         </Link>
 
         {/* ❤️ Wishlist Button */}
-        <div className="wishlist absolute lg:top-4 lg:right-4 md:to-3 md:right-5 top-2 right-2 z-10">
+        <div className="wishlist absolute lg:top-4 lg:right-4 md:to-3 md:right-5 top-2 right-2 z-10 ">
           <button onClick={handleWishlist}>
             {wishlisted ? (
-              <AiFillHeart className="lg:text-2xl md:text-2xl text-xl" />
+              <AiFillHeart className="lg:text-2xl md:text-2xl text-xl cursor-pointer" />
             ) : (
-              <AiOutlineHeart className="lg:text-2xl md:text-2xl text-xl" />
+              <AiOutlineHeart className="lg:text-2xl md:text-2xl text-xl cursor-pointer" />
             )}
           </button>
         </div>

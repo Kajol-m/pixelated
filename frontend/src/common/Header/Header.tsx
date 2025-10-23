@@ -6,6 +6,7 @@ import UserDropdown from "../Dropdown/UserDropdown";
 
 import { GoHomeFill } from "react-icons/go";
 import { BiSolidCategory } from "react-icons/bi";
+import { toast } from "sonner";
 
 const Header: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -45,13 +46,13 @@ const Header: React.FC = () => {
               id="search"
               className="border border-black rounded-none px-3 py-2 w-[300px] outline-none"
             />
-            <div className="flex items-center justify-center border border-black border-l-0 bg-black text-white rounded-none px-4 py-2">
-              <IoSearchSharp className="text-2xl" />
+            <div className="cursor-pointer flex items-center justify-center border border-black border-l-0 bg-black text-white rounded-none px-4 py-2">
+              <IoSearchSharp className="text-2xl  " onClick={()=>toast.warning("This feature has not been implemented yet.")} />
             </div>
           </div>
-          <div className="flex gap-6 text-2xl  cursor-pointer">
+          <div className="flex gap-6 text-2xl ">
             <div className="relative">
-              <button onClick={toggleDropdown}>
+              <button onClick={toggleDropdown} className=" cursor-pointer">
                 {/* <FiUser /> */}
                 <FaUser />
               </button>

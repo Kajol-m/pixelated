@@ -1,3 +1,4 @@
+import { toast } from "sonner";
 import Button from "../../common/Button/Button";
 
 const CheckoutCart: React.FC = () => {
@@ -34,7 +35,7 @@ const CheckoutCart: React.FC = () => {
           <p className="absolute right-8">$ {totalOrderCost}</p>
         </div>
         <div className="w-full pt-8 pb-4">
-          <Button variant="signup-signin" onClick={() => {}} className="w-full">
+          <Button variant="signup-signin" onClick={() => toast.warning("This feature is yet to be integrated!")} className="w-full">
             Proceed to Checkout
           </Button>
         </div>

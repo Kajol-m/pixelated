@@ -1,23 +1,26 @@
 import SubscribeEmail from "./SubscribeEmail";
 import { FaFacebook,  FaPinterest,  FaInstagram } from "react-icons/fa";
 import { IoIosMail } from "react-icons/io";
+import { Link } from "react-router-dom";
 
 const Footer:React.FC=()=>{
     return(
         <>
-        <div className="bg-gray-100">
-            <SubscribeEmail/>
+        <div className="border-t border-gray-300 bg-gray-100">
+            <div className="lg:px-[100px] md:px-8 border-b border-gray-300"><SubscribeEmail/></div>
+            
             <div className=" grid grid-cols-2 md:flex md:flex-row md:gap-[200px] items-center justify-center text-sm lg:py-[80px] md:py-[20px] py-[15px] px-8">
                 <nav>
                     <h2 className="text-xl font-semibold mb-2">SHOP</h2>
                     <ul className="flex flex-col space-y-1">
-                        <li><a href="">New Arrivals</a></li>
-                        <li><a href="">Clothing</a></li>
-                        <li><a href="">Accessories</a></li>
-                        <li><a href="">Artworks</a></li>
-                        <li><a href="">Plants</a></li>
-                        <li><a href="">Bestsellers</a></li>
-                        <li><a href="">Trending</a></li>
+                        
+                        <li><Link to="/collections/COL00000004">New Arrivals</Link></li>
+                        <li><Link to="/product/clothing">Clothing</Link></li>
+                        <li><Link to="/product/accessories">Accessories</Link></li>
+                        <li><Link to="/product/tops">Tops</Link></li>
+                        <li><Link to="/product/dresses">Dresses</Link></li>
+                        <li><Link to="/bestsellers">Bestsellers</Link></li>
+                        <li><Link to="/trending">Trending</Link></li>
                     </ul>
                 </nav>
                 <nav>

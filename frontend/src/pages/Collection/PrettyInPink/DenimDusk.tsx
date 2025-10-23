@@ -4,6 +4,7 @@ import Footer from "../../../common/Footer/Footer";
 import Header from "../../../common/Header/Header";
 import ItemCard from "../../../common/ItemCard/ItemCard";
 import { ItemCardSkeleton } from "@/common/ItemCard/ItemCardSkeleton";
+import api from "@/lib/api";
 // import OutfitsMain from "../../Outfits/OutfitsMain";
 
 interface ProductImage {
@@ -33,14 +34,14 @@ const DenimDusk: React.FC = () => {
 
   useEffect(() => {
     if (!collectionId) return;
-    const baseUrl = import.meta.env.VITE_API_URL;
+   // const baseUrl = import.meta.env.VITE_API_URL;
     const fetchProducts = async () => {
       try {
         setLoading(true);
-        const res = await fetch(
-          `${baseUrl}/api/products/collections/${collectionId}`
+        const res = await api.get(
+          `/api/products/collections/${collectionId}`
         );
-        const data: ProductApi[] = await res.json();
+        const data: ProductApi[] = await res.data;
 
         const transformed: Product[] = data.map((p) => {
           const primary =

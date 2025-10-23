@@ -1,68 +1,41 @@
 import { useEffect, useState } from "react";
 import { WishlistContext } from "./WishlistContext";
+import api from "@/lib/api";
 
-export const WishlistProvider = ({ children }: { children: React.ReactNode }) => {
+export const WishlistProvider = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
   const [wishlist, setWishlist] = useState<string[]>([]);
-  const baseUrl = import.meta.env.VITE_API_URL;
+  //const baseUrl = import.meta.env.VITE_API_URL;
   // Load from localStorage first (instant UI)
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("User") || "{}");
     const userId = user.user_id;
     if (!userId) return;
 
-    const stored = JSON.parse(localStorage.getItem(`wishlist_${userId}`) || "[]");
+    const stored = JSON.parse(
+      localStorage.getItem(`wishlist_${userId}`) || "[]"
+    );
     if (stored.length) setWishlist(stored);
   }, []);
 
   // Fetch from backend (sync latest)
   useEffect(() => {
     const fetchWishlist = async () => {
-  const user = JSON.parse(localStorage.getItem("User") || "{}");
-  let token = localStorage.getItem("token"); // updated name
+      const user = JSON.parse(localStorage.getItem("User") || "{}");
+      if (!user.user_id) return;
 
-  if (!user.user_id) return;
-
-  try {
-    let res = await fetch(`${baseUrl}/api/users/wishlist/${user.user_id}`, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-
-    // If access token expired → refresh it
-    if (res.status === 401 || res.status === 403) {
-      const refreshRes = await fetch(`${baseUrl}/api/users/refresh-token`, {
-        method: "GET",
-        credentials: "include", // send httpOnly refresh token cookie
-      });
-
-      if (!refreshRes.ok) {
-        // refresh token expired → logout
-        localStorage.removeItem("User");
-        localStorage.removeItem("token");
-        localStorage.removeItem("isLogin");
-        setWishlist([]);
-        return;
+      try {
+        const res = await api.get(`api/users/wishlist/${user.user_id}`);
+        setWishlist(res.data.wishlist || []);
+      } catch (err) {
+        console.error("Error fetching wishlist:", err);
+        // If Axios interceptors detect 401, token refresh happens automatically
+        // and request will be retried
       }
-
-      const refreshData = await refreshRes.json();
-      token = refreshData.accessToken;
-      if (token) {
-            localStorage.setItem("token", token);
-          } else {
-            localStorage.removeItem("token");
-          }
-
-      // retry wishlist request
-      res = await fetch(`${baseUrl}/api/users/wishlist/${user.user_id}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-    }
-
-    const data = await res.json();
-    setWishlist(data.wishlist || []);
-  } catch (err) {
-    console.error("Error fetching wishlist:", err);
-  }
-};
+    };
 
     fetchWishlist();
   }, []);
@@ -91,18 +64,16 @@ export const WishlistProvider = ({ children }: { children: React.ReactNode }) =>
     );
 
     try {
-      const method = isAlreadyWishlisted ? "DELETE" : "POST";
-      await fetch(`${baseUrl}/api/users/toggleWishlist`, {
-        method,
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          user_id: user.user_id,
-          product_id: productId,
-        }),
-      });
+      const payload = {
+        user_id: user.user_id,
+        product_id: productId,
+      };
+
+      if (isAlreadyWishlisted) {
+        await api.delete("/api/users/toggleWishlist", { data: payload });
+      } else {
+        await api.post("/api/users/toggleWishlist", payload);
+      }
     } catch (err) {
       console.error("Error updating wishlist:", err);
     }
@@ -111,7 +82,9 @@ export const WishlistProvider = ({ children }: { children: React.ReactNode }) =>
   const isWishlisted = (productId: string) => wishlist.includes(productId);
 
   return (
-    <WishlistContext.Provider value={{ wishlist, toggleWishlist, isWishlisted }}>
+    <WishlistContext.Provider
+      value={{ wishlist, toggleWishlist, isWishlisted }}
+    >
       {children}
     </WishlistContext.Provider>
   );
