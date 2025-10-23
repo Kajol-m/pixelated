@@ -4,6 +4,7 @@ import Footer from "../../../common/Footer/Footer";
 import Header from "../../../common/Header/Header";
 import ItemCard from "../../../common/ItemCard/ItemCard";
 import { ItemCardSkeleton } from "@/common/ItemCard/ItemCardSkeleton";
+import api from "@/lib/api";
 // import OutfitsMain from "../../Outfits/OutfitsMain";
 
 interface Product {
@@ -18,7 +19,7 @@ const CrimsonFlame: React.FC = () => {
   const [loading, setLoading] = useState(true);
 
   const collectionId = "COL00000004";
-  const baseUrl = import.meta.env.VITE_API_URL;
+  //const baseUrl = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     if (!collectionId) return;
@@ -26,11 +27,11 @@ const CrimsonFlame: React.FC = () => {
     const fetchProducts = async () => {
       try {
         setLoading(true);
-        //await new Promise((resolve) => setTimeout(resolve, 5000));
-        const res = await fetch(
-          `${baseUrl}/api/products/collections/${collectionId}`
+        // await new Promise((resolve) => setTimeout(resolve, 5000));
+        const res = await api.get(
+          `/api/products/collections/${collectionId}`
         );
-        const data = await res.json();
+        const data = await res.data;
 
         interface ApiImage {
           display_order: number;
@@ -81,7 +82,10 @@ const CrimsonFlame: React.FC = () => {
         <div className="grid lg:grid-cols-4 grid-cols-2 lg:gap-6 md:gap-5 lg:px-8 lg:pb-8 md:px-8 md:pb-6 pb-4 px-2">
           {loading
             ? Array.from({ length: 8 }).map((_, i) => (
-                <ItemCardSkeleton key={i} />
+              <>
+              <ItemCardSkeleton key={i} />
+              </>
+                
               ))
             : products.map((product) => (
                 <ItemCard

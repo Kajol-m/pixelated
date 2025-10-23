@@ -55,7 +55,7 @@ const Trending: React.FC = () => {
             hover_image: hover,
           };
         });
-        // No usage of 'any' type here; all types are explicitly defined.
+        
         setProducts(transformed);
       } catch (err) {
         console.error("Error fetching products:", err);

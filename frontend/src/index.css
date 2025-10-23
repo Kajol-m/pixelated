@@ -10,3 +10,13 @@
 .custom-swiper .swiper-pagination-bullet-active {
   @apply bg-white
 }
+/* Hide scrollbar for Webkit browsers */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Optional for Firefox */
+.scrollbar-hide {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE 10+ */
+}

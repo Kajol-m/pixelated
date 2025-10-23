@@ -62,7 +62,7 @@ const TrendingItems: React.FC = () => {
   return (
     <>
       <div className="lg:py-4 md:py-4 py-2">
-        <div className="overflow-x-auto scroll-smooth  scrollbar-hide grid grid-flow-col lg:auto-cols-[25%] md:auto-cols-[50%] auto-cols-[50%] lg:gap-4 lg:px-8">
+        <div className="overflow-x-auto scroll-smooth scrollbar-hide grid grid-flow-col lg:auto-cols-[25%] md:auto-cols-[50%] auto-cols-[50%] lg:gap-4 lg:px-8">
           {loading
             ? Array.from({ length: 8 }).map((_, i) => (
                 <ItemCardSkeleton key={i} />
