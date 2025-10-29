@@ -24,6 +24,7 @@ interface ApiProduct {
 const TrendingItems: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   const navigate = useNavigate();
   const baseUrl = import.meta.env.VITE_API_URL;
@@ -31,6 +32,8 @@ const TrendingItems: React.FC = () => {
     const fetchTrendingItems = async () => {
       try {
         setLoading(true);
+        setError(null);
+
         const res = await fetch(`${baseUrl}/api/trending/trending-items`);
         const data = await res.json();
         const imageRequired = (data as ApiProduct[]).map((p: ApiProduct) => {
@@ -52,8 +55,8 @@ const TrendingItems: React.FC = () => {
         setProducts(imageRequired);
       } catch (err) {
         console.error("Error fetching trending items:", err);
-      }
-      finally{
+        setError("Failed to load trending items. Please try again later.");
+      } finally {
         setLoading(false);
       }
     };
@@ -63,21 +66,26 @@ const TrendingItems: React.FC = () => {
     <>
       <div className="lg:py-4 md:py-4 py-2">
         <div className="overflow-x-auto scroll-smooth scrollbar-hide grid grid-flow-col lg:auto-cols-[25%] md:auto-cols-[50%] auto-cols-[50%] lg:gap-4 lg:px-8">
-          {loading
-            ? Array.from({ length: 8 }).map((_, i) => (
-                <ItemCardSkeleton key={i} />
-              ))
-            : products.map((product) => (
-                <ItemCard
-                  id={product.id}
-                  key={product.id}
-                  imgUrl={product.image}
-                  imgHoverUrl={product.hover_image}
-                  title={product.name}
-                  price={`$ ${product.price}`}
-                />
-              ))}
-
+          {loading ? (
+            Array.from({ length: 8 }).map((_, i) => (
+              <ItemCardSkeleton key={i} />
+            ))
+          ) : error ? (
+            <div className="flex items-center justify-center w-full text-red-500 font-medium">
+              {error}
+            </div>
+          ) : (
+            products.map((product) => (
+              <ItemCard
+                id={product.id}
+                key={product.id}
+                imgUrl={product.image}
+                imgHoverUrl={product.hover_image}
+                title={product.name}
+                price={`$ ${product.price}`}
+              />
+            ))
+          )}
           {/* Arrow / See All Card */}
           <div
             className="flex-shrink-0 w-full lg:min-w-[250px]  flex items-center justify-center  cursor-pointer hover:bg-gray-100"

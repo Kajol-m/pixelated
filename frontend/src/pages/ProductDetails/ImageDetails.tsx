@@ -1,7 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, lazy } from "react";
 import { useParams } from "react-router-dom";
-import { Swiper, SwiperSlide } from "swiper/react";
+import { SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper/modules";
+const Swiper = lazy(() =>
+  import("swiper/react").then((mod) => ({ default: mod.Swiper }))
+);
 
 interface ProductImage {
   image_id: string;
