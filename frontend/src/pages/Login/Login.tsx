@@ -5,6 +5,10 @@ import { RxCross2 } from "react-icons/rx";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import PasswordInput from "@/common/Input/PasswordInput";
+import api from "@/lib/api";
+import { toast } from "sonner";
+import ButtonSpinner from "@/common/Spinner/ButtonSpinner";
 
 interface LoginProps {
   email: string;
@@ -30,6 +34,7 @@ const Login = () => {
   const navigate = useNavigate();
 
   const [visitedFields, setVisitedFields] = useState<Set<string>>(new Set());
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const validateLogin = (vals: LoginProps): Errors => {
     const errs: Errors = {
@@ -95,32 +100,40 @@ const Login = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
+    setIsSubmitting(true);
+    //const baseUrl = import.meta.env.VITE_API_URL;
     try {
-      const response = await axios.post(
-        "http://localhost:5000/api/users/login",
-        {
-          email: formData.email,
-          password: formData.password,
-        }
-      );
+      const response = await api.post(`/api/users/login`, {
+        email: formData.email,
+        password: formData.password,
+      });
 
       console.log("✅ Logged in:", response.data);
-
+      toast.success("Login Successful!", {
+        description: "Happy Shopping",
+      });
       // Store JWT token for authentication
+      const accessToken = response.data.accessToken;
+      localStorage.setItem("token", accessToken); // or keep in memory (React context)
       localStorage.setItem("User", JSON.stringify(response.data.user));
-      localStorage.setItem("token", response.data.token);
       localStorage.setItem("isLogin", "true");
-
       navigate("/");
     } catch (err) {
-      if (typeof err === "object" && err !== null && "response" in err) {
-        // Type assertion to access err.response safely
-        const errorResponse = err as { response?: { data?: { message?: string } } };
-        alert(errorResponse.response?.data?.message || "Login failed");
-      } else {
-        alert("Server not reachable");
+      if (axios.isAxiosError(err)) {
+        const code = err.response?.data?.code;
+        switch (code) {
+          case "USER_NOT_REGISTERED":
+            toast.error("User not registered. Please sign up!");
+            break;
+          case "INVALID_CREDENTIALS":
+            toast.error("Invalid password. Try again!");
+            break;
+          default:
+            toast.error(err.response?.data?.message || "Login failed");
+        }
       }
+    } finally {
+      setIsSubmitting(false); // always stop spinner
     }
   };
 
@@ -143,12 +156,11 @@ const Login = () => {
   };
 
   return (
-    <div className="flex items-center justify center h-screen items-center justify-center h-screen bg-gray-300">
-      <div className=" relative w-full max-w-md p-[50px] bg-white m-8 shadow-lg">
-        {/* <div className="absolute right-[25px] top-[25px] pb-5"><RxCross2 /></div> */}
+    <div className="flex items-center justify center h-screen items-center justify-center h-screen bg-gray-300 ">
+      <div className=" relative w-full max-w-md p-[50px] bg-white m-8 shadow-lg cursor-pointer">
         <button
           onClick={() => navigate("/")}
-          className="absolute right-[25px] top-[25px] pb-5"
+          className="absolute right-[25px] top-[25px] pb-5 cursor-pointer"
         >
           <RxCross2 size={24} />
         </button>
@@ -176,7 +188,7 @@ const Login = () => {
               />
             </div>
             <div className="">
-              <Input
+              <PasswordInput
                 labelText="Password"
                 placeholderText="password"
                 onChange={handleChange("password")}
@@ -189,16 +201,16 @@ const Login = () => {
                 required={true}
                 errors={errors.password}
                 supportiveText={errors.password ? undefined : ""}
+                showPassword={true}
               />
             </div>
           </div>
           <div className="">
             <Button
               variant="signup-signin"
-              onClick={() => console.log("Login")}
-              className="pl-[50px] pr-[50px] w-full"
+              className="pl-[50px] pr-[50px] w-full  cursor-pointer"
             >
-              Sign In
+              {isSubmitting ? <ButtonSpinner className="w-4 h-4" /> : "Sign In"}
             </Button>
           </div>
         </form>
@@ -207,8 +219,8 @@ const Login = () => {
           <Link to="/registration">
             <Button
               variant="primary"
-              onClick={() => console.log("Sign-up")}
-              className="pl-[50px] pr-[50px]"
+              onClick={() => {}}
+              className="pl-[50px] pr-[50px]  cursor-pointer"
             >
               Sign Up
             </Button>

@@ -4,7 +4,7 @@ import Button from "../../common/Button/Button";
 const ShopMenu: React.FC = () => {
   const collectionId='COL00000004';
   return (
-    <div className="lg:p-5 p-3 gap-6 flex flex-row items-center justify-center">
+    <div className="hidden lg:p-5 p-3 gap-6 lg:flex flex-row items-center justify-center">
       <Link to={`/collections/${collectionId}`}>
       <Button variant="primary" onClick={() => {}} className="hidden sm:block">
         SHOP NEW ARRIVALS
@@ -26,7 +26,7 @@ const ShopMenu: React.FC = () => {
           SHOP BOTTOMS
         </Button>
       </Link>
-      <Link to={`/product/assessories`}>
+      <Link to={`/product/accessories`}>
       <Button
         variant="primary"
         onClick={() => console.log("Shop Artwork Clicked")}

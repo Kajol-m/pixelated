@@ -54,7 +54,7 @@ const Banner: React.FC = () => {
   }, [currentSlides]);
 
   return (
-    <>
+    <div className="hidden lg:flex">
       <div className="relative w-full overflow-hidden">
         <Link
           to={bannerImages[currentSlides].route}
@@ -85,7 +85,7 @@ const Banner: React.FC = () => {
           ))}
         </div>
       </div>
-    </>
+    </div>
   );
 };
 export default Banner;

@@ -5,6 +5,9 @@ import { RxCross2 } from "react-icons/rx";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { toast } from "sonner";
+import PasswordInput from "@/common/Input/PasswordInput";
+import ButtonSpinner from "@/common/Spinner/ButtonSpinner";
 
 interface RegistrationProps {
   fullName: string;
@@ -34,6 +37,8 @@ const Registration: React.FC = () => {
     password: "",
     confirmPassword: "",
   });
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const navigate = useNavigate();
 
@@ -103,7 +108,6 @@ const Registration: React.FC = () => {
         errs.confirmPassword = "Passwords must match";
     }
 
-    // Add more validation logic as needed
     return errs;
   };
 
@@ -119,69 +123,72 @@ const Registration: React.FC = () => {
     }));
   };
   const handleBlur = (fieldName: keyof RegistrationProps) => () => {
-    setVisitedFields(prev => new Set(prev).add(fieldName as string));
+    setVisitedFields((prev) => new Set(prev).add(fieldName as string));
     setErrors(validateForm(formData));
   };
 
-  // const handleSubmit = (e: React.FormEvent) => {
-  //   e.preventDefault();
-
-  //   const newErrors = validateForm(formData, true);
-  //   setErrors(newErrors);
-
-  //   const isValid = Object.values(newErrors).every((error) => error === "");
-
-  //   if (isValid) {
-  //     const newUser = {
-  //       fullName: formData.fullName,
-  //       email: formData.email,
-  //       password: formData.password,
-  //     };
-  //     console.log(newUser);
-  //     localStorage.setItem("User", JSON.stringify(newUser));
-  //     navigate("/login");
-  //   }
-  // };
   const handleSubmit = async (e: React.FormEvent) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  const newErrors = validateForm(formData, true);
-  setErrors(newErrors);
+    const newErrors = validateForm(formData, true);
+    setErrors(newErrors);
 
-  const isValid = Object.values(newErrors).every((error) => error === "");
+    const isValid = Object.values(newErrors).every((error) => error === "");
 
-  if (!isValid) return;
+    if (!isValid) return;
+    const baseUrl = import.meta.env.VITE_API_URL;
+    setIsSubmitting(true);
 
-  try {
-    const response = await axios.post("http://localhost:5000/api/users/register", {
-      user_name: formData.fullName,   // backend expects user_name
-      email: formData.email,
-      password: formData.password,
-    });
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => {
+      controller.abort();
+    }, 15000);
+    try {
+      const response = await axios.post(
+        `${baseUrl}/api/users/register`,
+        {
+          user_name: formData.fullName, // backend expects user_name
+          email: formData.email,
+          password: formData.password,
+        },
+        { signal: controller.signal }
+      );
 
-    console.log("✅ Registered:", response.data);
-
-    // You probably don’t want to save password in localStorage!
-    // Instead save token or just navigate
-    localStorage.setItem("User", JSON.stringify(response.data.user));
-
-    navigate("/login");
-
-  } catch (err) {
-    if (axios.isAxiosError(err) && err.response) {
-      console.error("❌ API Error:", err.response.data);
-      alert(err.response.data.message || "Registration failed");
-    } else if (err instanceof Error) {
-      console.error("❌ Network Error:", err.message);
-      alert("Server not reachable");
-    } else {
-      console.error("❌ Unknown Error:", err);
-      alert("An unexpected error occurred");
+      console.log("✅ Registered:", response.data);
+      toast.success("Registration successful", {
+        description: "please log in.",
+      });
+      navigate("/login");
+    } catch (err) {
+      if (axios.isAxiosError(err) && err.response) {
+        console.error("❌ API Error:", err.response.data);
+        toast("Registration failed!", {
+          description: "try again",
+        });
+      } else if (axios.isAxiosError(err) && err.code === "ERR_CANCELED") {
+        toast.error("Request timed out", {
+          description: "Please try again later.",
+        });
+      } else if (axios.isAxiosError(err)) {
+        console.error("❌ Axios Error:", err.message);
+        toast.error("Registration failed", {
+          description: "something went wrong",
+        });
+      } else if (err instanceof Error) {
+        console.error("❌ Network Error:", err.message);
+        toast.error("Registration failed", {
+          description: "something went wrong",
+        });
+      } else {
+        console.error("❌ Unknown Error:", err);
+        toast.error("An unexpected error occurred");
+      }
+    } finally {
+      clearTimeout(timeoutId);
+      setIsSubmitting(false);
     }
-  }
-};
+  };
 
-  //moves key from one input field to another on Pressing Enter
   const handleKeyDown = (e: React.KeyboardEvent<HTMLFormElement>) => {
     if (e.key === "Enter") {
       e.preventDefault();
@@ -205,7 +212,7 @@ const Registration: React.FC = () => {
       <div className=" relative w-full max-w-md p-[50px] bg-white m-8 shadow-lg">
         <button
           onClick={() => navigate("/")}
-          className="absolute right-[25px] top-[25px] pb-5"
+          className="absolute right-[25px] top-[25px] pb-5 cursor-pointer"
         >
           <RxCross2 size={24} />
         </button>
@@ -253,7 +260,7 @@ const Registration: React.FC = () => {
               />
             </div>
             <div className="">
-              <Input
+              <PasswordInput
                 labelText="Password"
                 placeholderText="password"
                 onChange={handleChange("password")}
@@ -266,10 +273,11 @@ const Registration: React.FC = () => {
                 required={true}
                 errors={errors.password}
                 supportiveText={errors.password ? undefined : ""}
+                showPassword={true}
               />
             </div>
             <div className="">
-              <Input
+              <PasswordInput
                 labelText="Confirm Password"
                 placeholderText="confirm password"
                 onChange={handleChange("confirmPassword")}
@@ -282,6 +290,7 @@ const Registration: React.FC = () => {
                 required={true}
                 errors={errors.confirmPassword}
                 supportiveText={errors.confirmPassword ? undefined : ""}
+                showPassword={true}
               />
             </div>
           </div>
@@ -289,18 +298,18 @@ const Registration: React.FC = () => {
             <Button
               variant="signup-signin"
               type="submit"
-              className="pl-[50px] pr-[50px] w-full"
+              className="pl-[50px] pr-[50px] w-full flex justify-center items center"
             >
-              Sign Up
+              {isSubmitting ? <ButtonSpinner  className="w-6 h-6"  /> : "Sign Up"}
             </Button>
           </div>
         </form>
         <div className="text-center pt-5">
-          <h1 className="pb-5">Already hava an account ?</h1>
+          <h1 className="pb-5">Already have an account ?</h1>
           <Link to="/login">
             <Button
               variant="primary"
-              onClick={() => console.log("redirects to log in")}
+              onClick={() => {}}
               className="pl-[50px] pr-[50px]"
             >
               Sign In

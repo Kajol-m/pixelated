@@ -1,25 +1,10 @@
-// const ImageDetails:React.FC=()=>{
-//     return(
-//         <div className="flex flex-row gap-6">
-//             <div className="flex flex-col gap-6 w-[75px]">
-//                 <img src="\top-5\top-5-a.webp" alt="" />
-//                 <img src="\top-5\top-5-b.webp" alt="" />
-//                 <img src="\top-5\top-5-c.webp" alt="" />
-//                 <img src="\top-5\top-5-d.webp" alt="" />
-//                 <img src="\top-5\top-5-e.webp" alt="" />
-//             </div>
-//             <div className="w-3/4">
-//                 <img src="\top-5\top-5-a.webp" alt="" />
-//             </div>
-//         </div>
-//     )
-// }
-// export default ImageDetails;
-
-import { useState, useEffect } from "react";
+import { useState, useEffect, lazy } from "react";
 import { useParams } from "react-router-dom";
-import { Swiper, SwiperSlide } from "swiper/react";
+import { SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper/modules";
+const Swiper = lazy(() =>
+  import("swiper/react").then((mod) => ({ default: mod.Swiper }))
+);
 
 interface ProductImage {
   image_id: string;
@@ -35,10 +20,10 @@ const ImageDetails: React.FC = () => {
 
   useEffect(() => {
     if (!id) return;
-
+    const baseUrl = import.meta.env.VITE_API_URL;
     const fetchImages = async () => {
       try {
-        const res = await fetch(`http://localhost:5000/api/products/${id}/images`);
+        const res = await fetch(`${baseUrl}/api/products/${id}/images`);
         const data = await res.json();
 
         if (data && data.length > 0) {
@@ -55,30 +40,30 @@ const ImageDetails: React.FC = () => {
 
   return (
     <>
-    <div className="hidden lg:flex flex-row gap-6">
-      {/* Thumbnails */}
-      <div className="flex flex-col gap-6 w-[75px] overflow-y-auto ">
-        {images.map((img) => (
-          <img
-            key={img.image_id}
-            src={img.image_url}
-            alt={img.image_alt_text || "product image"}
-            className="cursor-pointer border hover:border-black"
-            onClick={() => setMainImage(img.image_url)}
-          />
-        ))}
-      </div>
+      <div className="hidden lg:flex flex-row gap-8">
+        {/* Thumbnails */}
+        <div className="flex flex-col gap-6 w-[100px] overflow-y-auto ">
+          {images.map((img) => (
+            <img
+              key={img.image_id}
+              src={img.image_url}
+              alt={img.image_alt_text || "product image"}
+              className="cursor-pointer border border-gray-300 hover:border-black"
+              onClick={() => setMainImage(img.image_url)}
+            />
+          ))}
+        </div>
 
-      {/* Main image */}
-      <div className="w-3/4">
-        {mainImage && (
-          <img src={mainImage} alt="Main product" className="w-full h-auto" />
-        )}
+        {/* Main image */}
+        <div className="w-full">
+          {mainImage && (
+            <img src={mainImage} alt="Main product" className="w-full h-auto" />
+          )}
+        </div>
       </div>
-    </div>
-    <div className="block lg:hidden w-full">
+      <div className="block lg:hidden w-full">
         <Swiper
-          modules={[ Pagination]}
+          modules={[Pagination]}
           navigation
           pagination={{ clickable: true }}
           spaceBetween={10}
@@ -86,7 +71,7 @@ const ImageDetails: React.FC = () => {
           className="w-full h-auto custom-swiper"
         >
           {images.map((img) => (
-            <SwiperSlide key={img.image_id}>
+            <SwiperSlide key={img.image_id} >
               <img
                 src={img.image_url}
                 alt={img.image_alt_text || "product image"}

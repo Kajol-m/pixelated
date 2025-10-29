@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import ItemCard from "../../common/ItemCard/ItemCard";
 import { useNavigate } from "react-router-dom";
+import { ItemCardSkeleton } from "@/common/ItemCard/ItemCardSkeleton";
 
 interface Product {
   id: string;
@@ -22,13 +23,18 @@ interface ApiProduct {
 }
 const TrendingItems: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
-  const navigate=useNavigate()
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const navigate = useNavigate();
+  const baseUrl = import.meta.env.VITE_API_URL;
   useEffect(() => {
     const fetchTrendingItems = async () => {
       try {
-        const res = await fetch(
-          `http://localhost:5000/api/trending/trending-items`
-        );
+        setLoading(true);
+        setError(null);
+
+        const res = await fetch(`${baseUrl}/api/trending/trending-items`);
         const data = await res.json();
         const imageRequired = (data as ApiProduct[]).map((p: ApiProduct) => {
           const primary =
@@ -49,61 +55,60 @@ const TrendingItems: React.FC = () => {
         setProducts(imageRequired);
       } catch (err) {
         console.error("Error fetching trending items:", err);
+        setError("Failed to load trending items. Please try again later.");
+      } finally {
+        setLoading(false);
       }
     };
     fetchTrendingItems();
-  },[]);
+  }, []);
   return (
     <>
-      {/* <div className="grid grid-cols-4 gap-6 px-8 pb-8">
-        {products.map((product) => (
-            <ItemCard
-              id={product.id}
-              key={product.id}
-              imgUrl={product.image}
-              imgHoverUrl={product.hover_image}
-              title={product.name}
-              price={`$ ${product.price}`}
-            />
-          ))}
-      </div> */}
-      <div className="overflow-x-auto md:px-8 py-4 scrollbar-hide">
-      <div className="grid grid-flow-col lg:auto-cols-[25%] md:auto-cols-[50%] auto-cols-[50%] gap-4 items-center">
-        {products.map((product) => (
-          <ItemCard
-            key={product.id}
-            id={product.id}
-            imgUrl={product.image}
-            imgHoverUrl={product.hover_image}
-            title={product.name}
-            price={`$ ${product.price}`}
-          />
-        ))}
-
-        {/* Arrow / See All Card */}
-        <div
-          className="flex-shrink-0 w-full min-w-[250px] flex items-center justify-center  cursor-pointer hover:bg-gray-100"
-          onClick={() => navigate("/trending")}
-        >
-          <span className="text-lg font-semibold flex items-center gap-2">
-            See All
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-            >
-              <path
-                fillRule="evenodd"
-                d="M10.293 15.707a1 1 0 010-1.414L13.586 11H3a1 1 0 110-2h10.586l-3.293-3.293a1 1 0 111.414-1.414l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0z"
-                clipRule="evenodd"
+      <div className="lg:py-4 md:py-4 py-2">
+        <div className="overflow-x-auto scroll-smooth scrollbar-hide grid grid-flow-col lg:auto-cols-[25%] md:auto-cols-[50%] auto-cols-[50%] lg:gap-4 lg:px-8">
+          {loading ? (
+            Array.from({ length: 8 }).map((_, i) => (
+              <ItemCardSkeleton key={i} />
+            ))
+          ) : error ? (
+            <div className="flex items-center justify-center w-full text-red-500 font-medium">
+              {error}
+            </div>
+          ) : (
+            products.map((product) => (
+              <ItemCard
+                id={product.id}
+                key={product.id}
+                imgUrl={product.image}
+                imgHoverUrl={product.hover_image}
+                title={product.name}
+                price={`$ ${product.price}`}
               />
-            </svg>
-          </span>
+            ))
+          )}
+          {/* Arrow / See All Card */}
+          <div
+            className="flex-shrink-0 w-full lg:min-w-[250px]  flex items-center justify-center  cursor-pointer hover:bg-gray-100"
+            onClick={() => navigate("/trending")}
+          >
+            <span className="text-lg font-semibold flex items-center gap-2">
+              See All
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M10.293 15.707a1 1 0 010-1.414L13.586 11H3a1 1 0 110-2h10.586l-3.293-3.293a1 1 0 111.414-1.414l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </span>
+          </div>
         </div>
       </div>
-    </div>
-
     </>
   );
 };

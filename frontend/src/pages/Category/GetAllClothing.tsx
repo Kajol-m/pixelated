@@ -4,6 +4,7 @@ import Footer from "@/common/Footer/Footer";
 import Header from "@/common/Header/Header";
 import ItemCard from "@/common/ItemCard/ItemCard";
 import OutfitsMain from "@/pages/Outfits/OutfitsMain";
+import { ItemCardSkeleton } from "@/common/ItemCard/ItemCardSkeleton";
 
 interface Product {
   id: string;
@@ -24,19 +25,19 @@ interface ApiProduct {
   price: string;
   images: ApiImage[];
 }
-const GetAllBottoms: React.FC = () => {
+const GetAllClothing: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
- 
-  const path = window.location.pathname; 
-      const parts = path.split("/");
-      const categoryName = parts[2]; 
+  const [loading, setLoading] = useState(true);
 
+  const path = window.location.pathname;
+  const parts = path.split("/");
+  const categoryName = parts[2];
+  const baseUrl = import.meta.env.VITE_API_URL;
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await fetch(
-          `http://localhost:5000/api/products/bottoms`
-        );
+        setLoading(true);
+        const res = await fetch(`${baseUrl}/api/products/clothing`);
         const data = await res.json();
 
         const transformed = (data as ApiProduct[]).map((p: ApiProduct) => {
@@ -59,6 +60,8 @@ const GetAllBottoms: React.FC = () => {
         setProducts(transformed);
       } catch (err) {
         console.error("Error fetching products:", err);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -70,18 +73,22 @@ const GetAllBottoms: React.FC = () => {
       <div className="">
         <Header />
         <OutfitsMain subCategory={categoryName} />
-        <Filter />
-        <div className="grid lg:grid-cols-4 grid-cols-2 lg:gap-6 md:gap-5 gap-4 lg:px-8 lg:pb-8 md:px-8 md:pb-6 pb-4 px-4">
-          {products.map((product) => (
-            <ItemCard
-              id={product.id}
-              key={product.id}
-              imgUrl={product.image}
-              imgHoverUrl={product.hover_image}
-              title={product.name}
-              price={`$ ${product.price}`}
-            />
-          ))}
+        <Filter filters={["Tops", "Bottom", "Accessories"]} />
+        <div className="grid lg:grid-cols-4 grid-cols-2 lg:gap-6 md:gap-5 lg:px-8 lg:pb-8 md:px-8 md:pb-6 pb-4 px-2">
+          {loading
+            ? Array.from({ length: 8 }).map((_, i) => (
+                <ItemCardSkeleton key={i} />
+              ))
+            : products.map((product) => (
+                <ItemCard
+                  id={product.id}
+                  key={product.id}
+                  imgUrl={product.image}
+                  imgHoverUrl={product.hover_image}
+                  title={product.name}
+                  price={`$ ${product.price}`}
+                />
+              ))}
         </div>
         <Footer />
       </div>
@@ -89,4 +96,4 @@ const GetAllBottoms: React.FC = () => {
   );
 };
 
-export default GetAllBottoms;
+export default GetAllClothing;

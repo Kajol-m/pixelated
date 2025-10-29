@@ -67,11 +67,6 @@ const Input: React.FC<InputProps> = ({
           </div>
         )}
       </div>
-      {/* {supportiveText && (
-        <span className={`text-gray-600 text-sm ${className}`}>
-          {supportiveText}
-        </span>
-      )} */}
       <span
                 className={`text-xs ${errors ? "text-red-500" : "text-gray-600"} block min-h-[10px]`}
             >

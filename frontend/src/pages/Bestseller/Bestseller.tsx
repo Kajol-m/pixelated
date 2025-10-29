@@ -4,6 +4,7 @@ import Footer from "@/common/Footer/Footer";
 import Header from "@/common/Header/Header";
 import ItemCard from "@/common/ItemCard/ItemCard";
 import OutfitsMain from "@/pages/Outfits/OutfitsMain";
+import { ItemCardSkeleton } from "@/common/ItemCard/ItemCardSkeleton";
 
 interface Product {
   id: string;
@@ -14,15 +15,18 @@ interface Product {
 }
 const Bestseller: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
-const path = window.location.pathname; 
-      const parts = path.split("/");
-      const categoryName = parts[1]; 
+  const [loading, setLoading] = useState(true);
+
+  const path = window.location.pathname;
+  const parts = path.split("/");
+  const categoryName = parts[1];
+  const baseUrl = import.meta.env.VITE_API_URL;
+
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await fetch(
-          `http://localhost:5000/api/bestseller/bestsellers`
-        );
+        setLoading(true);
+        const res = await fetch(`${baseUrl}/api/bestseller/bestsellers`);
         const data = await res.json();
 
         interface ApiImage {
@@ -39,9 +43,11 @@ const path = window.location.pathname;
 
         const transformed = (data as ApiProduct[]).map((p: ApiProduct) => {
           const primary =
-            p.images.find((img: ApiImage) => img.display_order === 1)?.url || "";
+            p.images.find((img: ApiImage) => img.display_order === 1)?.url ||
+            "";
           const hover =
-            p.images.find((img: ApiImage) => img.display_order === 2)?.url || "";
+            p.images.find((img: ApiImage) => img.display_order === 2)?.url ||
+            "";
 
           return {
             id: p.product_id,
@@ -55,6 +61,8 @@ const path = window.location.pathname;
         setProducts(transformed);
       } catch (err) {
         console.error("Error fetching products:", err);
+      } finally {
+        setLoading(false); // stop skeletons
       }
     };
 
@@ -66,18 +74,22 @@ const path = window.location.pathname;
       <div className="">
         <Header />
         <OutfitsMain subCategory={categoryName} />
-        <Filter />
-        <div className="grid lg:grid-cols-4 grid-cols-2 lg:gap-6 md:gap-5 gap-4 lg:px-8 lg:pb-8 md:px-8 md:pb-6 pb-4 px-4">
-          {products.map((product) => (
-            <ItemCard
-              id={product.id}
-              key={product.id}
-              imgUrl={product.image}
-              imgHoverUrl={product.hover_image}
-              title={product.name}
-              price={`$ ${product.price}`}
-            />
-          ))}
+        <Filter filters={["Tops","Bottom","Accessories"]}/>
+        <div className="grid lg:grid-cols-4 grid-cols-2 lg:gap-6 md:gap-5 lg:px-8 lg:pb-8 md:px-8 md:pb-6 pb-4 px-2">
+          {loading
+            ? Array.from({ length: 8 }).map((_, i) => (
+                <ItemCardSkeleton key={i} />
+              ))
+            : products.map((product) => (
+                <ItemCard
+                  id={product.id}
+                  key={product.id}
+                  imgUrl={product.image}
+                  imgHoverUrl={product.hover_image}
+                  title={product.name}
+                  price={`$ ${product.price}`}
+                />
+              ))}
         </div>
         <Footer />
       </div>

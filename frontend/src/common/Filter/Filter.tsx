@@ -1,16 +1,16 @@
 import Dropdown from "../Dropdown/Dropdown";
-
-const Filter: React.FC = () => {
+interface FilterProps {
+  filters: string[];
+}
+const Filter: React.FC<FilterProps> = ({ filters = [] }) => {
   return (
-    <>
-      <div className="hidden lg:flex flex-row gap-8 justify-start pl-8 py-8 border-b-1 border-gray-300">
-        <Dropdown title="Category" />
-        <Dropdown title="Category" />
-        <Dropdown title="Category" />
-      </div>
-      {/* <Dropdown title="Category" /> */}
-    </>
+    <div className="hidden lg:flex flex-row gap-8 justify-start pl-8 py-8 border-b border-gray-300 cursor-pointer">
+      {filters.map((filter) => (
+        <Dropdown key={filter} title={filter} />
+      ))}
+    </div>
   );
 };
+
 
 export default Filter;
