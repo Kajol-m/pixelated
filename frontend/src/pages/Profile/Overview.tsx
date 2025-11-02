@@ -1,7 +1,5 @@
 import Header from "@/common/Header/Header";
 import ProfileImageSection from "./ProfileImageSection";
-//import ProfileInformationSection from "./ProfileInformationSection";
-import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { toast } from "sonner";
 import ProfileCard from "@/common/Profile/ProfileCard";
