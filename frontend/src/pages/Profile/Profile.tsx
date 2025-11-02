@@ -1,52 +1,54 @@
-import Header from "@/common/Header/Header";
-import ProfileImageSection from "./ProfileImageSection";
-import ProfileInformationSection from "./ProfileInformationSection";
-import { useNavigate } from "react-router-dom";
 import Button from "@/common/Button/Button";
-import { useEffect } from "react";
-import { toast } from "sonner";
+import Header from "@/common/Header/Header";
+import TabMenu from "@/common/Profile/TabMenu";
+import Account from "./Account";
+import Footer from "@/common/Footer/Footer";
 
-const Profile: React.FC = () => {
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    // Check if the toast has already been shown in this session
-    const toastShown = sessionStorage.getItem("profileToastShown");
-
-    if (!toastShown) {
-      const timer = setTimeout(() => {
-        toast.warning("This component is not completed.");
-        sessionStorage.setItem("profileToastShown", "true");
-      }, 2000);
-
-      return () => clearTimeout(timer);
-    }
-  }, []);
-
-  const handleLogout = () => {
-    const user = JSON.parse(localStorage.getItem("User") || "{}");
-    const userId = user.user_id;
-    localStorage.removeItem("User");
-    localStorage.removeItem("token");
-    localStorage.removeItem("isLogin");
-    localStorage.removeItem(`wishlist_${userId}`);
-    navigate("/");
-  };
-
+const Profile = () => {
   return (
-    <>
+    <div>
       <Header />
+      <div className="lg:mx-[200px]">
       <div className="pt-[85px]"></div>
-      <div>
-        <ProfileImageSection />
-        <ProfileInformationSection />
+      <Account/>
+      <hr className="border-gray-300" />
+      <div className="grid grid-cols-4">
+        <div className="col-span-1">
+          <TabMenu />
+        </div>
+        <div className="border border-gray-300 m-8 px-8 col-span-3">
+          <div className="border-b border-gray-300 p-8 font-bold">PROFILE DETAILS</div>
+          <div className=" flex flex-col gap-6 p-8">
+            <div className="grid grid-cols-2 gap-8">
+              <p>FULL NAME</p>
+              <p>KAJOL MURMU</p>
+            </div>
+            <div className="grid grid-cols-2 gap-8">
+              <p>MOBILE NUMBER</p>
+              <p>6206098696</p>
+            </div>
+            <div className="grid grid-cols-2 gap-8">
+              <div>EMAIL</div>
+              <div>kajolmurmu29@gmail.com</div>
+            </div>
+            <div className="grid grid-cols-2 gap-8">
+              <p>DATE OF BIRTH</p>
+              <p>16-09-2002</p>
+            </div>
+            <div className="grid grid-cols-2 gap-8">
+              <p>ADDRESS</p>
+              <p>Jamshedpur</p>
+            </div>
+          </div>
+          <div className="py-8 flex justify-center">
+            <Button variant="signup-signin" className="w-1/2">EDIT</Button>
+          </div>
+        </div>
       </div>
-      <div>
-        <Button variant="primary" onClick={handleLogout}>
-          Log out
-        </Button>
       </div>
-    </>
+      <Footer/>
+    </div>
   );
 };
+
 export default Profile;

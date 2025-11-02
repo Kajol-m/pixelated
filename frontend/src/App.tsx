@@ -22,6 +22,11 @@ import { Toaster } from "sonner";
 import ErrorBoundary from "./pages/ErrorBoundary/ErrorBoundary";
 import NotFound from "./pages/ErrorBoundary/NotFound";
 import Category from "./pages/Category/Category";
+import Overview from "./pages/Profile/Overview";
+import TermsPolicy from "./pages/Profile/TermsPolicy";
+import Addresses from "./pages/Profile/Addresses";
+import PrivacyPolicy from "./pages/Profile/PrivacyPolicy";
+import Orders from "./pages/Profile/Orders";
 // import CrashTest from "./pages/ErrorBoundary/CrashTest";
 function App() {
   return (
@@ -56,9 +61,14 @@ function App() {
           <Route path="/product/accessories" element={<GetAllAccessories />} />
           <Route path="/product/clothing" element={<GetAllClothing />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/dashboard" element={<Overview />} />
           <Route path="/wishlist" element={<Wishlist />} />
           <Route path="*" element={<NotFound/>}/>
           <Route path="/category" element={<Category/>}/>
+          <Route path="/terms" element={<TermsPolicy/>}/>
+          <Route path="/privacypolicy" element={<PrivacyPolicy/>}/>
+          <Route path="/address" element={<Addresses/>}/>
+          <Route path="/orders" element={<Orders/>}/>
           {/* <Route path="/crash" element={<CrashTest />} /> 👈 test route */}
         </Routes>
       </WishlistProvider>
