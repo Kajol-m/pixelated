@@ -39,20 +39,30 @@
 //   );
 // };
 // export default TabMenu;
+import api from "@/lib/api";
 import { useNavigate, useLocation } from "react-router-dom";
+import { toast } from "sonner";
 
 const TabMenu = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const handleLogout = () => {
-    const user = JSON.parse(localStorage.getItem("User") || "{}");
-    const userId = user.user_id;
-    localStorage.removeItem("User");
-    localStorage.removeItem("token");
-    localStorage.removeItem("isLogin");
-    localStorage.removeItem(`wishlist_${userId}`);
-    navigate("/");
+  const handleLogout = async () => {
+    try {
+      await api.post("/api/users/logout");
+
+      const user = JSON.parse(localStorage.getItem("User") || "{}");
+      const userId = user.user_id;
+      localStorage.removeItem("User");
+      localStorage.removeItem("token");
+      localStorage.removeItem("isLogin");
+      localStorage.removeItem(`wishlist_${userId}`);
+      navigate("/");
+      toast.success("Logged out successfully!");
+    } catch (error) {
+      console.error("Logout failed:", error);
+      toast.error("Failed to logout. Please try again.");
+    }
   };
 
   const links = [
@@ -68,7 +78,8 @@ const TabMenu = () => {
   return (
     <div className="flex flex-col gap-3 p-8 border-r border-gray-300 h-full">
       {links.map((item) => {
-        const isActive = location.pathname === item.link;
+        const isActive = location.pathname.startsWith(item.link);
+        
 
         return (
           <div

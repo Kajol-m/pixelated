@@ -49,8 +49,10 @@ const Addresses = () => {
   return (
     <div>
       <Header />
+      <div className="pt-[85px]"></div>
+        <hr className="border-gray-300 h-px w-full" />
       <div className="lg:mx-[200px]">
-        <div className="pt-[85px]"></div>
+        
         <Account />
         <hr className="border-gray-300" />
         <div className="grid grid-cols-4">
@@ -60,7 +62,7 @@ const Addresses = () => {
           <div className="col-span-3 p-8">
             <div className="flex flex-col sm:flex-row items-center justify-between mb-6">
               {/* Title */}
-              <h2 className="text-lg font-semibold text-gray-800 mb-4 sm:mb-0">
+              <h2 className="text-xl font-semibold text-gray-800 mb-4 sm:mb-0">
                 SAVED ADDRESSES
               </h2>
 
@@ -74,7 +76,7 @@ const Addresses = () => {
               </Button>
             </div>
 
-            <div className="space-y-4">
+            <div className="space-y-8">
               {addresses.map((a) => (
                 <AddressCard
                   key={a.id}

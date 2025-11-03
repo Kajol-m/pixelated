@@ -2,8 +2,9 @@ import Footer from "@/common/Footer/Footer";
 import Header from "@/common/Header/Header";
 import Account from "./Account";
 import TabMenu from "@/common/Profile/TabMenu";
+import EditDetailsForm from "./EditDetailsForm";
 
-const Orders=()=>{
+const EditProfile=()=>{
      return (
     <div>
       <Header />
@@ -17,7 +18,7 @@ const Orders=()=>{
             <TabMenu />
           </div>
           <div className="col-span-3 p-8 flex justify-center items-center">
-            <p>NO ORDERS YET</p>
+            <EditDetailsForm/>
           </div>
         </div>
       </div>
@@ -25,5 +26,5 @@ const Orders=()=>{
     </div>
   );
 };
-export default Orders;
+export default EditProfile;
 

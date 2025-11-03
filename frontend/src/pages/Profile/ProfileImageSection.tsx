@@ -1,4 +1,10 @@
+import { selectProfile } from "@/store/features/userSlice";
+import { useSelector } from "react-redux";
+
 export default function ProfileImageSection() {
+  
+  const profile=useSelector(selectProfile);
+  
   return (
     <div className="flex flex-col sm:flex-row
         items-center sm:items-start
@@ -21,8 +27,8 @@ export default function ProfileImageSection() {
         />
       </div>
       <div className="col-span-5">
-        <h2 className="text-lg font-semibold">Name</h2>
-        <p className="text-gray-600">Email</p>
+        <h2 className="text-lg font-semibold">{profile.fullName.toUpperCase() || "NAME"}</h2>
+        <p className="text-gray-600">{profile.email}</p>
       </div>
     </div>
   );
