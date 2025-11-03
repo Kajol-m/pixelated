@@ -27,6 +27,7 @@ import TermsPolicy from "./pages/Profile/TermsPolicy";
 import Addresses from "./pages/Profile/Addresses";
 import PrivacyPolicy from "./pages/Profile/PrivacyPolicy";
 import Orders from "./pages/Profile/Orders";
+import EditProfile from "./pages/Profile/EditProfile";
 // import CrashTest from "./pages/ErrorBoundary/CrashTest";
 function App() {
   return (
@@ -61,6 +62,7 @@ function App() {
           <Route path="/product/accessories" element={<GetAllAccessories />} />
           <Route path="/product/clothing" element={<GetAllClothing />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/profile/edit" element={<EditProfile />} />
           <Route path="/dashboard" element={<Overview />} />
           <Route path="/wishlist" element={<Wishlist />} />
           <Route path="*" element={<NotFound/>}/>
@@ -69,6 +71,7 @@ function App() {
           <Route path="/privacypolicy" element={<PrivacyPolicy/>}/>
           <Route path="/address" element={<Addresses/>}/>
           <Route path="/orders" element={<Orders/>}/>
+
           {/* <Route path="/crash" element={<CrashTest />} /> 👈 test route */}
         </Routes>
       </WishlistProvider>

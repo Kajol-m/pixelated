@@ -35,12 +35,15 @@ const bannerImages: BannerProps[] = [
 
 const Banner: React.FC = () => {
   const [currentSlides, setCurrentSlide] = useState(0);
+  const [imageLoaded, setImageLoaded] = useState(false);
 
   const nextSlide = () => {
+    setImageLoaded(false);
     setCurrentSlide((prev) => (prev + 1) % bannerImages.length);
   };
 
   const prevSlide = () => {
+    setImageLoaded(false);
     setCurrentSlide(
       (prev) => (prev - 1 + bannerImages.length) % bannerImages.length
     );
@@ -60,9 +63,16 @@ const Banner: React.FC = () => {
           to={bannerImages[currentSlides].route}
           className="w-full object-cover"
         >
+          {!imageLoaded && (
+            <div className="w-full h-[75vh] bg-gray-200 animate-pulse" />
+          )}
           <img
             src={bannerImages[currentSlides].imageUrl}
             alt={bannerImages[currentSlides].altText}
+            className={`w-full object-cover transition-opacity duration-500 ${
+              imageLoaded ? "opacity-100" : "opacity-0"
+            }`}
+            onLoad={() => setImageLoaded(true)} 
           />
         </Link>
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex justify-between w-full px-3 z-10">

@@ -10,6 +10,7 @@ import Account from "./Account";
 import Footer from "@/common/Footer/Footer";
 
 const Overview: React.FC = () => {
+  
   useEffect(() => {
     // Check if the toast has already been shown in this session
     const toastShown = sessionStorage.getItem("profileToastShown");
@@ -27,8 +28,10 @@ const Overview: React.FC = () => {
   return (
     <div>
       <Header />
-      <div className="lg:mx-[200px]">
       <div className="pt-[85px]"></div>
+        <hr className="border-gray-300 h-px w-full" />
+      <div className="lg:mx-[200px]">
+      
       <Account/>
       <hr className="border-gray-300"/>
       <div className="grid grid-cols-4">
