@@ -149,8 +149,8 @@ export default function EditDetailsForm() {
                 }
                 className={`py-2 border text-center relative ${
                   userDetails.gender === gender
-                    ? "border rounded-sm font-semibold bg-gray-50"
-                    : "border-gray-300 text-gray-700 hover:border-gray-400"
+                    ? " border-2 rounded-sm font-semibold bg-gray-50"
+                    : "border-gray-300 text-gray-700 "
                 }`}
               >
                 {userDetails.gender === gender && (
@@ -185,7 +185,16 @@ export default function EditDetailsForm() {
         </div>
 
         {/* Save Button */}
-        <div className="py-8 flex justify-center">
+        <div className="py-8 flex justify-center gap-8">
+          <Button
+            variant="primary"
+            onClick={() => {
+              navigate(`/address`);
+            }}
+            className="w-1/2"
+          >
+            CANCEL
+          </Button>
           <Button
             variant="signup-signin"
             onClick={addProfileDetails}

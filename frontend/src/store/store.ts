@@ -1,8 +1,10 @@
 import {configureStore} from '@reduxjs/toolkit';
-import profileReducer from "./features/userSlice"
+import profileReducer from "./features/userSlice";
+import addressReducer from "./features/addressSlice";
 export const store= configureStore({
     reducer:{
-        profileDetails:profileReducer
+        profileDetails:profileReducer,
+        addresses: addressReducer,
     },
     middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
