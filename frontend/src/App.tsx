@@ -28,6 +28,8 @@ import Addresses from "./pages/Profile/Addresses";
 import PrivacyPolicy from "./pages/Profile/PrivacyPolicy";
 import Orders from "./pages/Profile/Orders";
 import EditProfile from "./pages/Profile/EditProfile";
+import EditAddress from "./pages/Profile/EditAddress";
+import AddAddress from "./pages/Profile/AddAddress";
 // import CrashTest from "./pages/ErrorBoundary/CrashTest";
 function App() {
   return (
@@ -71,6 +73,9 @@ function App() {
           <Route path="/privacypolicy" element={<PrivacyPolicy/>}/>
           <Route path="/address" element={<Addresses/>}/>
           <Route path="/orders" element={<Orders/>}/>
+          <Route path="/address/add" element={<AddAddress/>}/>
+          <Route path="/address/edit/:address_id" element={<EditAddress />} />
+
 
           {/* <Route path="/crash" element={<CrashTest />} /> 👈 test route */}
         </Routes>
