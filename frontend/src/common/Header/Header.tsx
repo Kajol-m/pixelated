@@ -3,7 +3,6 @@ import { IoSearchSharp } from "react-icons/io5";
 import { FaHeart, FaUser, FaShoppingCart } from "react-icons/fa";
 import { useState } from "react";
 import UserDropdown from "../Dropdown/UserDropdown";
-
 import { GoHomeFill } from "react-icons/go";
 import { BiSolidCategory } from "react-icons/bi";
 import { toast } from "sonner";
@@ -53,7 +52,6 @@ const Header: React.FC = () => {
           <div className="flex gap-6 text-2xl ">
             <div className="relative">
               <button onClick={toggleDropdown} className=" cursor-pointer">
-                {/* <FiUser /> */}
                 <FaUser />
               </button>
               {isOpen && (
@@ -65,9 +63,6 @@ const Header: React.FC = () => {
                 </div>
               )}
             </div>
-
-            {/* <FaRegHeart /> */}
-            {/* <PiShoppingBagOpen /> */}
             <Link to="/wishlist">
               <FaHeart />
             </Link>

@@ -1,18 +1,14 @@
 import api from "@/lib/api";
-import { calculateClothingTax } from "@/lib/tax";
-import { useEffect, useState } from "react";
+import {
+  removeOrderItem,
+  selectOrders,
+  setOrdersList,
+  recalculateOrderPrice,
+  type OrderProps,
+} from "@/store/features/orderSlice";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "sonner";
-
-interface CartItem {
-  product_id: string;
-  product_name: string;
-  unit_price: number;
-  total_price: number;
-  size: string;
-  color: string;
-  image_url: string;
-  order_item_id: string;
-}
 
 interface BackendCartItem {
   product_id: string;
@@ -23,10 +19,12 @@ interface BackendCartItem {
   color: string;
   image_url: string;
   order_item_id: string;
+  image_id?: string;
 }
 
 const CartProduct: React.FC = () => {
-  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const dispatch = useDispatch();
+  const orders = useSelector(selectOrders);
 
   const token = localStorage.getItem("token");
   const user = JSON.parse(localStorage.getItem("User") || "{}");
@@ -45,32 +43,28 @@ const CartProduct: React.FC = () => {
         const res = await api.get(`${baseUrl}/api/getCart`);
 
         const data = await res.data;
+        console.log("Cart data from backend:", data);
         if (!data.result || !Array.isArray(data.result)) {
           console.error("Backend returned invalid cart data:", data);
           toast.error("Something went wrong!");
           return;
         }
 
-        // Convert prices to numbers
 
-        const items: CartItem[] = (data.result as BackendCartItem[]).map(
-          (item: BackendCartItem): CartItem => ({
+        const items: OrderProps[] = (data.result as BackendCartItem[]).map(
+          (item: BackendCartItem): OrderProps => ({
             ...item,
             unit_price: Number(item.unit_price),
             total_price: Number(item.total_price),
+            size: item.size as "s" | "m" | "l" | "xl",
+            image_id: item.image_id || "",
+            quantity: 1,
+            user_id: user_id,
           })
         );
 
-        setCartItems(items);
-
-        // Calculate totals after fetch
-        const total = items.reduce((sum, item) => sum + item.total_price, 0);
-
-        const tax = calculateClothingTax(total);
-
-        // Store in localStorage
-        localStorage.setItem("totalOrderCost", total.toString());
-        localStorage.setItem("taxOnOrder", tax.toString());
+        dispatch(setOrdersList(items));
+        dispatch(recalculateOrderPrice());
       } catch (error) {
         console.error("Error fetching data for cart:", error);
         toast.error("Something went wrong!");
@@ -80,20 +74,18 @@ const CartProduct: React.FC = () => {
     getCartProducts();
   }, [user_id]);
 
-  const removeFromCart = async (product_id: string) => {
+  const removeFromCart = async (order_item_id: string) => {
     if (!user_id) {
       toast.error("Please login first.");
       return;
     }
     try {
       await api.delete("/api/removeCart", {
-        data: { user_id, product_id }, // Axios sends DELETE body like this
+        data: { user_id, order_item_id }, //user order_item_id for consistency -fix in the backend
       });
 
-      setCartItems((prev) =>
-        prev.filter((item) => item.product_id !== product_id)
-      );
-
+      dispatch(removeOrderItem(order_item_id));
+      dispatch(recalculateOrderPrice());
       toast.success("Item removed from cart!");
     } catch (error) {
       console.error("Error removing product for cart:", error);
@@ -102,16 +94,16 @@ const CartProduct: React.FC = () => {
   };
 
   const handleSaveForLater = () => {
-    toast("Saved for later!"); // You can implement backend logic here
+    toast("Saved for later!");
   };
 
   const handleEdit = () => {
-    toast("Edit feature coming soon!"); // You can navigate to product page or modal
+    toast("Edit feature coming soon!");
   };
 
   return (
     <div className="flex flex-col gap-4">
-      {cartItems.map((item) => (
+      {orders.map((item) => (
         <div
           key={item.order_item_id}
           className="flex flex-row pb-8 pt-8 lg:mx-8 md:mx-6 mx-4 border-b border-gray-300 relative"
@@ -134,15 +126,13 @@ const CartProduct: React.FC = () => {
             <div className="flex lg:flex-row flex-col lg:gap-8 gap-1 text-gray-500 lg:pt-[50px] md:pt-[50px] text-[13px]">
               <p className="">14 days return available</p>
               <div className="lg:absolute flex flex-row lg:right-8 gap-2 underline underline-offset-4">
-                <button onClick={() => removeFromCart(item.product_id)}>
+                <button onClick={() => removeFromCart(item.order_item_id)}>
                   Remove
                 </button>
                 <button onClick={() => handleSaveForLater()}>
                   Save for later
                 </button>
-                <button onClick={() => handleEdit()}>
-                  Edit
-                </button>
+                <button onClick={() => handleEdit()}>Edit</button>
               </div>
             </div>
           </div>

@@ -16,9 +16,9 @@ const ShoppingCart: React.FC = () => {
           <CartProduct />
         </div>
         <div className="lg:w-1/3 lg:p-8 md:p-7 p-5">
-        <div className="sticky top-[100px] lg:pb-[100px]">
+          <div className="sticky top-[100px] lg:pb-[100px]">
             <CheckoutCart />
-        </div>
+          </div>
         </div>
       </div>
 

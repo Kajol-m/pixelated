@@ -15,7 +15,6 @@ interface Product {
   product_name: string;
   price: string;
   images: ProductImage[];
-  // add more fields if your API has them
 }
 
 const Details: React.FC = () => {

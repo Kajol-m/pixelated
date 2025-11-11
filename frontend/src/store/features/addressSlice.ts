@@ -75,6 +75,7 @@ export const AddressSlice = createSlice({
     // Set default address
     setDefaultAddress: (state, action: PayloadAction<string>) => {
       state.defaultAddressId = action.payload;
+      
       // Update is_default flag in the list
       state.list = state.list.map((addr) => ({
         ...addr,

@@ -101,7 +101,7 @@ const Login = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    //const baseUrl = import.meta.env.VITE_API_URL;
+  
     try {
       const response = await api.post(`/api/users/login`, {
         email: formData.email,
@@ -112,9 +112,9 @@ const Login = () => {
       toast.success("Login Successful!", {
         description: "Happy Shopping",
       });
-      // Store JWT token for authentication
+      
       const accessToken = response.data.accessToken;
-      localStorage.setItem("token", accessToken); // or keep in memory (React context)
+      localStorage.setItem("token", accessToken);
       localStorage.setItem("User", JSON.stringify(response.data.user));
       localStorage.setItem("isLogin", "true");
       navigate("/");

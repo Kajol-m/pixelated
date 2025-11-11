@@ -1,7 +1,10 @@
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { Link } from "react-router";
-import {useWishlist} from "../../hooks/useWishlist"; // adjust path as needed
 import { toast } from "sonner";
+import type { RootState } from "@/store/store";
+import {useSelector } from "react-redux";
+import { toggleWishlistThunk } from "@/store/features/wishlistThunk";
+import { useAppDispatch } from "@/store/hook";
 
 interface ItemCardsProps {
   id: string;
@@ -20,15 +23,32 @@ const ItemCard: React.FC<ItemCardsProps> = ({
   title,
   price,
 }) => {
-  const { isWishlisted, toggleWishlist } = useWishlist();
+  const dispatch = useAppDispatch();
+  const wishlisted = useSelector((state: RootState) =>
+    state.wishlist.items.some((item) => item.id === id)
+  );
 
-  const handleWishlist = async () => {
-    await toggleWishlist(id); // this will handle backend + local updates
+  const user = JSON.parse(localStorage.getItem("User") || "{}");
+  const token = localStorage.getItem("token");
+
+  const handleWishlist = () => {
+    if (!token || !user.user_id) {
+      toast.error("Please login first!");
+      return;
+    }
+
+    dispatch(
+      toggleWishlistThunk({
+        id,
+        name: title || "",
+        price: price || "",
+        image: imgUrl || "",
+        hover_image: imgHoverUrl || "",
+        user_id: user.user_id,
+      })
+    );
   };
 
-  const wishlisted = isWishlisted(id); // get real-time state from context
-
-  
   return (
     <div className="lg:px-4 md:px-4 px-3 lg:py-8 md:py-8 pt-4 pb-2">
       <div className="relative group overflow-hidden product-image-wishlist-and-addtocart">
@@ -69,7 +89,12 @@ const ItemCard: React.FC<ItemCardsProps> = ({
 
         {/* Hover Add to Cart */}
         <div className="hidden absolute bottom-0 left-0 w-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
-          <button className="w-full bg-black text-white py-3 hover:bg-gray-800" onClick={()=>{toast("Added to bag !")}}>
+          <button
+            className="w-full bg-black text-white py-3 hover:bg-gray-800"
+            onClick={() => {
+              toast("Added to bag !");
+            }}
+          >
             ADD TO CART
           </button>
         </div>

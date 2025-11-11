@@ -189,7 +189,7 @@ export default function EditDetailsForm() {
           <Button
             variant="primary"
             onClick={() => {
-              navigate(`/address`);
+              navigate(`/profile`);
             }}
             className="w-1/2"
           >
