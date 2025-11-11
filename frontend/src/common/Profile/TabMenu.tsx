@@ -1,62 +1,22 @@
-// import { useNavigate } from "react-router-dom";
-
-// const TabMenu = () => {
-//   const navigate = useNavigate();
-
-//   const handleLogout = () => {
-//     const user = JSON.parse(localStorage.getItem("User") || "{}");
-//     const userId = user.user_id;
-//     localStorage.removeItem("User");
-//     localStorage.removeItem("token");
-//     localStorage.removeItem("isLogin");
-//     localStorage.removeItem(`wishlist_${userId}`);
-//     navigate("/");
-//   };
-
-//   const links = [
-//     { name: "overview", link: "/dashboard" },
-//     { name: "profile", link: "/profile" },
-//     {name:"orders", link:"/orders"},
-//     {name:"wishlist", link:"/wishlist"},
-//     {name:"address", link:"/address"},
-//     {name:"terms", link:"/terms&use"},
-//     {name:"privacypolicy", link:"/privacypolicy"},
-//   ];
-
-//   return (
-//     <div className="flex flex-col gap-2 p-8">
-//       <div className="hover:cursor-pointer">OVERVIEW</div>
-//       <div className="hover:cursor-pointer">PROFILE</div>
-//       <div className="hover:cursor-pointer">ORDERS</div>
-//       <div className="hover:cursor-pointer">WISHLIST</div>
-//       <div className="hover:cursor-pointer">ADDRESS</div>
-//       <div className="hover:cursor-pointer">TERMS & USE</div>
-//       <div className="hover:cursor-pointer">PRIVACY POLICY</div>
-//       <div onClick={handleLogout} className="hover:cursor-pointer">
-//         LOGOUT
-//       </div>
-//     </div>
-//   );
-// };
-// export default TabMenu;
 import api from "@/lib/api";
+import { clearWishlist } from "@/store/features/wishlistSlice";
+import { useDispatch } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
 import { toast } from "sonner";
 
 const TabMenu = () => {
   const navigate = useNavigate();
   const location = useLocation();
-
+  const dispatch=useDispatch()
+  
   const handleLogout = async () => {
     try {
       await api.post("/api/users/logout");
-
-      const user = JSON.parse(localStorage.getItem("User") || "{}");
-      const userId = user.user_id;
+      
       localStorage.removeItem("User");
       localStorage.removeItem("token");
       localStorage.removeItem("isLogin");
-      localStorage.removeItem(`wishlist_${userId}`);
+      dispatch(clearWishlist());
       navigate("/");
       toast.success("Logged out successfully!");
     } catch (error) {
@@ -89,7 +49,7 @@ const TabMenu = () => {
               cursor-pointer 
               px-3 py-2 
               text-sm transition-all duration-200
-              ${isActive ? "font-bold bg-gray-100 font-semibold" : "hover:bg-gray-100"}
+              ${isActive ? "font-semibold bg-gray-100" : "hover:bg-gray-100"}
             `}
           >
             {item.name}

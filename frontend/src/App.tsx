@@ -30,7 +30,8 @@ import EditProfile from "./pages/Profile/EditProfile";
 import EditAddress from "./pages/Profile/EditAddress";
 import AddAddress from "./pages/Profile/AddAddress";
 import ProtectedRoute from "./hooks/ProtectedRoute";
-// import CrashTest from "./pages/ErrorBoundary/CrashTest";
+import Search from "./common/HeaderSearch/Search";
+
 function App() {
   return (
     <>
@@ -138,6 +139,7 @@ function App() {
               </ProtectedRoute>
             }
           />
+          <Route path="/search" element={<Search />} />
         </Routes>
       </ErrorBoundary>
     </>

@@ -2,22 +2,21 @@ import { useNavigate } from "react-router-dom";
 import Button from "../Button/Button";
 import api from "@/lib/api";
 import { toast } from "sonner";
+import { useDispatch } from "react-redux";
+import { clearWishlist } from "@/store/features/wishlistSlice";
 
 const UserDropdown: React.FC = () => {
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
   const isLogin = localStorage.getItem("isLogin");
 
   const handleLogout = async () => {
     try {
       await api.post("/api/users/logout");
-
-      const user = JSON.parse(localStorage.getItem("User") || "{}");
-      const userId = user.user_id;
       localStorage.removeItem("User");
       localStorage.removeItem("token");
       localStorage.removeItem("isLogin");
-      localStorage.removeItem(`wishlist_${userId}`);
+      dispatch(clearWishlist());
       navigate("/");
       toast.success("Logged out successfully!");
     } catch (error) {

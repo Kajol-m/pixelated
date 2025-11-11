@@ -9,6 +9,9 @@ import PasswordInput from "@/common/Input/PasswordInput";
 import api from "@/lib/api";
 import { toast } from "sonner";
 import ButtonSpinner from "@/common/Spinner/ButtonSpinner";
+import { useDispatch } from "react-redux";
+import { setWishlist } from "@/store/features/wishlistSlice";
+import type { Product, ProductApi } from "../Wishlist/Wishlist";
 
 interface LoginProps {
   email: string;
@@ -32,6 +35,7 @@ const Login = () => {
   });
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [visitedFields, setVisitedFields] = useState<Set<string>>(new Set());
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -101,7 +105,7 @@ const Login = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-  
+
     try {
       const response = await api.post(`/api/users/login`, {
         email: formData.email,
@@ -112,11 +116,42 @@ const Login = () => {
       toast.success("Login Successful!", {
         description: "Happy Shopping",
       });
-      
+
       const accessToken = response.data.accessToken;
       localStorage.setItem("token", accessToken);
       localStorage.setItem("User", JSON.stringify(response.data.user));
       localStorage.setItem("isLogin", "true");
+
+      try {
+        const wishlistResponse = await api.get(
+          `/api/users/wishlistProducts/${response.data.user.user_id}`,
+          {
+            headers: { Authorization: `Bearer ${accessToken}` },
+          }
+        );
+        
+        const res = await wishlistResponse.data;
+        const data: ProductApi[] = res.wishlist || [];
+        const transformed: Product[] = data.map((p) => {
+          const primary =
+            p.images.find((img) => img.display_order === 1)?.url || "";
+          const hover =
+            p.images.find((img) => img.display_order === 2)?.url || "";
+
+          return {
+            id: p.product_id,
+            name: p.product_name,
+            price: p.price,
+            image: primary,
+            hover_image: hover,
+            user_id: response.data.user.user_id,
+          };
+        });
+        dispatch(setWishlist(transformed));
+      } catch (err) {
+        console.error("Failed to fetch wishlist after login", err);
+      }
+
       navigate("/");
     } catch (err) {
       if (axios.isAxiosError(err)) {

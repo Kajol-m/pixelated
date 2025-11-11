@@ -82,8 +82,8 @@ const TermsPolicy = () => {
 
           <h2 className="text-lg font-semibold">10. CONTACT US</h2>
           <p>
-            📧 support@pixelated.com <br />
-            📍 Pixelated Pvt. Ltd., Jamshedpur, India
+            support@pixelated.com <br />
+            Pixelated Pvt. Ltd., Jamshedpur, India
           </p>
         </section>
       </div>

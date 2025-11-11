@@ -14,19 +14,20 @@ interface ProductImage {
   display_order: number;
 }
 
-interface ProductApi {
+export interface ProductApi {
   product_id: string;
   product_name: string;
   price: string;
   images: ProductImage[];
 }
 
-interface Product {
+export interface Product {
   id: string;
   name: string;
   price: string;
   image: string;
   hover_image?: string;
+  user_id: string;
 }
 
 const Wishlist: React.FC = () => {
@@ -63,6 +64,7 @@ const Wishlist: React.FC = () => {
             price: p.price,
             image: primary,
             hover_image: hover,
+            user_id: user.user_id,
           };
         });
         dispatch(setWishlist(transformed));
