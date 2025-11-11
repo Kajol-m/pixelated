@@ -32,8 +32,6 @@ export const WishlistProvider = ({
         setWishlist(res.data.wishlist || []);
       } catch (err) {
         console.error("Error fetching wishlist:", err);
-        // If Axios interceptors detect 401, token refresh happens automatically
-        // and request will be retried
       }
     };
 

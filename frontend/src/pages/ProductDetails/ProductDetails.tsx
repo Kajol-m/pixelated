@@ -15,8 +15,6 @@ const ProductDetails: React.FC = () => {
         <div className="lg:flex flex-row gap-8">
           <div className="lg:w-1/2"><ImageDetails/></div>
           <div className="lg:w-1/2 sm:pt-6"><Details/></div>
-          {/* <ImageDetails/>
-          <Details/> */}
         </div>
       </div>
       <div>

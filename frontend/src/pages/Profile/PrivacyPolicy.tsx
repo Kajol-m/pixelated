@@ -67,8 +67,8 @@ const PrivacyPolicy = () => {
 
           <h2 className="text-lg font-semibold">8. CONTACT US</h2>
           <p>
-            📧 privacy@pixelated.com <br />
-            📍 Pixelated Pvt. Ltd., Jamshedpur, India
+            privacy@pixelated.com <br />
+            Pixelated Pvt. Ltd., Jamshedpur, India
           </p>
         </section>
       </div>
