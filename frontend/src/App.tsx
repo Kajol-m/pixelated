@@ -15,19 +15,30 @@ import GetAllDresses from "./pages/Category/GetAllDresses";
 import GetAllAccessories from "./pages/Category/GetAllAccessories";
 import GetAllClothing from "./pages/Category/GetAllClothing";
 import Profile from "./pages/Profile/Profile";
-import { WishlistProvider } from "./hooks/WishlistProvider";
 import Wishlist from "./pages/Wishlist/Wishlist";
 import ScrollToTop from "./hooks/ScrollToTop";
 import { Toaster } from "sonner";
 import ErrorBoundary from "./pages/ErrorBoundary/ErrorBoundary";
 import NotFound from "./pages/ErrorBoundary/NotFound";
 import Category from "./pages/Category/Category";
-// import CrashTest from "./pages/ErrorBoundary/CrashTest";
+import Overview from "./pages/Profile/Overview";
+import TermsPolicy from "./pages/Profile/TermsPolicy";
+import Addresses from "./pages/Profile/Addresses";
+import PrivacyPolicy from "./pages/Profile/PrivacyPolicy";
+import Orders from "./pages/Profile/Orders";
+import EditProfile from "./pages/Profile/EditProfile";
+import EditAddress from "./pages/Profile/EditAddress";
+import AddAddress from "./pages/Profile/AddAddress";
+import ProtectedRoute from "./hooks/ProtectedRoute";
+import Search from "./common/HeaderSearch/Search";
+import ProceedToCkeckout from "./pages/ProceedToCheckout/ProceedToCkeckout";
+import Payment from "./pages/Payment/Payment";
+
 function App() {
   return (
-    <><ErrorBoundary>
-      <ScrollToTop />
-      <WishlistProvider>
+    <>
+      <ErrorBoundary>
+        <ScrollToTop />
         <Toaster
           position="top-center"
           richColors
@@ -40,7 +51,14 @@ function App() {
           <Route path="/outfits" element={<Outfits />} />
           <Route path="/product" element={<ProductDetails />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/shopping-cart" element={<ShoppingCart />} />
+          <Route
+            path="/shopping-cart"
+            element={
+              <ProtectedRoute>
+                <ShoppingCart />
+              </ProtectedRoute>
+            }
+          />
           <Route path="/registration" element={<Registration />} />
           <Route
             path="/collections/:collectionId"
@@ -55,14 +73,79 @@ function App() {
           <Route path="/product/dresses" element={<GetAllDresses />} />
           <Route path="/product/accessories" element={<GetAllAccessories />} />
           <Route path="/product/clothing" element={<GetAllClothing />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/wishlist" element={<Wishlist />} />
-          <Route path="*" element={<NotFound/>}/>
-          <Route path="/category" element={<Category/>}/>
-          {/* <Route path="/crash" element={<CrashTest />} /> 👈 test route */}
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute>
+                <Profile />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/profile/edit"
+            element={
+              <ProtectedRoute>
+                <EditProfile />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <Overview />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/wishlist"
+            element={
+              <ProtectedRoute>
+                <Wishlist />
+              </ProtectedRoute>
+            }
+          />
+          <Route path="*" element={<NotFound />} />
+          <Route path="/category" element={<Category />} />
+          <Route path="/terms" element={<TermsPolicy />} />
+          <Route path="/privacypolicy" element={<PrivacyPolicy />} />
+          <Route
+            path="/address"
+            element={
+              <ProtectedRoute>
+                <Addresses />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/orders"
+            element={
+              <ProtectedRoute>
+                <Orders />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/address/add"
+            element={
+              <ProtectedRoute>
+                <AddAddress />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/address/edit/:address_id"
+            element={
+              <ProtectedRoute>
+                <EditAddress />
+              </ProtectedRoute>
+            }
+          />
+          <Route path="/search" element={<Search />} />
+          <Route path="/select-address" element={<ProceedToCkeckout />} />
+          <Route path="/payment" element={<Payment/>}/>
         </Routes>
-      </WishlistProvider>
-     </ErrorBoundary>
+      </ErrorBoundary>
     </>
   );
 }

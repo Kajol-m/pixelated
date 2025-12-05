@@ -3,49 +3,44 @@ import OutfitsMain from "../Outfits/OutfitsMain";
 import Footer from "@/common/Footer/Footer";
 import ItemCard from "@/common/ItemCard/ItemCard";
 import Filter from "@/common/Filter/Filter";
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect} from "react";
 import api from "@/lib/api";
+import { useDispatch, useSelector } from "react-redux";
+import { setWishlist} from "@/store/features/wishlistSlice";
+import type { RootState } from "@/store/store";
 
 interface ProductImage {
   url: string;
   display_order: number;
 }
 
-interface ProductApi {
+export interface ProductApi {
   product_id: string;
   product_name: string;
   price: string;
   images: ProductImage[];
 }
 
-interface Product {
+export interface Product {
   id: string;
   name: string;
   price: string;
   image: string;
   hover_image?: string;
+  user_id: string;
 }
 
 const Wishlist: React.FC = () => {
-  const [products, setProducts] = useState<Product[]>([]);
-  const navigate = useNavigate();
-
+  const products = useSelector((state: RootState) => state.wishlist.items);
+  const dispatch = useDispatch();
   const user = JSON.parse(localStorage.getItem("User") || "{}");
   const token = localStorage.getItem("token");
   const userId = user.user_id;
 
   useEffect(() => {
-    if (!user.user_id || !token) {
-      // redirect to login
-      navigate("/login");
-    }
-  }, [navigate]);
-  useEffect(() => {
     if (!userId) return;
 
     const fetchProducts = async () => {
-      //const baseUrl = import.meta.env.VITE_API_URL;
       try {
         const res = await api.get(
           `/api/users/wishlistProducts/${user.user_id}`,
@@ -69,17 +64,16 @@ const Wishlist: React.FC = () => {
             price: p.price,
             image: primary,
             hover_image: hover,
+            user_id: user.user_id,
           };
         });
-
-        setProducts(transformed);
+        dispatch(setWishlist(transformed));
       } catch (err) {
         console.error("Error fetching products:", err);
       }
     };
 
     fetchProducts();
-    // window.location.reload();
   }, [userId]);
 
   return (

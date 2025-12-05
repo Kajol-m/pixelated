@@ -8,6 +8,7 @@ import axios from "axios";
 import { toast } from "sonner";
 import PasswordInput from "@/common/Input/PasswordInput";
 import ButtonSpinner from "@/common/Spinner/ButtonSpinner";
+import api from "@/lib/api";
 
 interface RegistrationProps {
   fullName: string;
@@ -136,7 +137,6 @@ const Registration: React.FC = () => {
     const isValid = Object.values(newErrors).every((error) => error === "");
 
     if (!isValid) return;
-    const baseUrl = import.meta.env.VITE_API_URL;
     setIsSubmitting(true);
 
     const controller = new AbortController();
@@ -144,8 +144,8 @@ const Registration: React.FC = () => {
       controller.abort();
     }, 15000);
     try {
-      const response = await axios.post(
-        `${baseUrl}/api/users/register`,
+      const response = await api.post(
+        `/api/users/register`,
         {
           user_name: formData.fullName, // backend expects user_name
           email: formData.email,
@@ -300,7 +300,7 @@ const Registration: React.FC = () => {
               type="submit"
               className="pl-[50px] pr-[50px] w-full flex justify-center items center"
             >
-              {isSubmitting ? <ButtonSpinner  className="w-6 h-6"  /> : "Sign Up"}
+              {isSubmitting ? <ButtonSpinner className="w-6 h-6" /> : "Sign Up"}
             </Button>
           </div>
         </form>

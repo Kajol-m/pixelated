@@ -1,11 +1,10 @@
-// ErrorBoundary.tsx
 import Button from "@/common/Button/Button";
 import { Component, type ReactNode, type ErrorInfo } from "react";
 
 interface ErrorBoundaryProps {
   children: ReactNode;
   fallback?: ReactNode;
-  navigate?: (path: string | number) => void; // 👈 added
+  navigate?: (path: string | number) => void;
 }
 
 interface ErrorBoundaryState {
@@ -27,7 +26,7 @@ export default class ErrorBoundary extends Component<
   }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    console.error("❌ Error Boundary Caught an error:", error, errorInfo);
+    console.error("Error Boundary Caught an error:", error, errorInfo);
   }
 
   render() {
