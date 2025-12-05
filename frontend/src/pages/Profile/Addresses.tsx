@@ -83,7 +83,7 @@ const Addresses = () => {
     <div>
       <Header />
       <div className="pt-[85px]"></div>
-      <hr className="border-gray-300 h-px w-full" />
+      <hr className="border-gray-300 w-full" />
       <div className="lg:mx-[200px]">
         <Account />
         <hr className="border-gray-300" />

@@ -1,10 +1,11 @@
-import { toast } from "sonner";
 import Button from "../../common/Button/Button";
 import { orderPrice } from "@/store/features/orderSlice";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const CheckoutCart: React.FC = () => {
   const { subtotal, tax, shippingCost, total } = useSelector(orderPrice);
+  const navigate=useNavigate();
 
   return (
     <div className="relative">
@@ -30,7 +31,7 @@ const CheckoutCart: React.FC = () => {
           <Button
             variant="signup-signin"
             onClick={() =>
-              toast.warning("This feature is yet to be integrated!")
+              navigate(`/select-address`)
             }
             className="w-full"
           >

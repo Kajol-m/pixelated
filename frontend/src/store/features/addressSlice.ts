@@ -15,6 +15,7 @@ export interface addressProps {
 interface AddressState {
   list: addressProps[];
   defaultAddressId: string | null;
+  selectedShippingAddressId: string | null;
   loading: boolean;
   error: string | null;
 }
@@ -22,6 +23,7 @@ interface AddressState {
 const initialState: AddressState = {
   list: [],
   defaultAddressId: null,
+  selectedShippingAddressId: null,
   loading: false,
   error: null,
 };
@@ -75,7 +77,7 @@ export const AddressSlice = createSlice({
     // Set default address
     setDefaultAddress: (state, action: PayloadAction<string>) => {
       state.defaultAddressId = action.payload;
-      
+
       // Update is_default flag in the list
       state.list = state.list.map((addr) => ({
         ...addr,
@@ -99,6 +101,9 @@ export const AddressSlice = createSlice({
       }
     },
 
+    setSelectedShippingAddress: (state, action: PayloadAction<string>) => {
+      state.selectedShippingAddressId = action.payload;
+    },
     // Loading and error states
     setLoading: (state, action: PayloadAction<boolean>) => {
       state.loading = action.payload;
@@ -124,6 +129,7 @@ export const {
   deleteAddress,
   setDefaultAddress,
   updateAddressField,
+  setSelectedShippingAddress,
   setLoading,
   setError,
   clearError,
@@ -138,7 +144,12 @@ export const selectDefaultAddress = (state: RootState) => {
 };
 export const selectAddressById = (state: RootState, addressId: string) =>
   state.addresses.list.find((addr) => addr.address_id === addressId);
-export const selectAddressLoading = (state: RootState) => state.addresses.loading;
+export const selectShippingAddress = (state: RootState) => {
+  const { list, selectedShippingAddressId } = state.addresses;
+  return list.find((a) => a.address_id === selectedShippingAddressId) || null;
+};
+export const selectAddressLoading = (state: RootState) =>
+  state.addresses.loading;
 export const selectAddressError = (state: RootState) => state.addresses.error;
 
 export default AddressSlice.reducer;

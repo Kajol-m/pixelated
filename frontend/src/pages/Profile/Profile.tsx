@@ -51,36 +51,36 @@ const Profile = () => {
     <div>
       <Header />
       <div className="pt-[85px]"></div>
-      <hr className="border-gray-300 h-px w-full" />
-      <div className="lg:mx-[200px]">
+      <hr className="border-gray-300  w-full" />
+      <div className="lg:mx-[200px]" >
         <Account />
         <hr className="border-gray-300" />
         <div className="grid grid-cols-4">
           <div className="col-span-1">
             <TabMenu />
           </div>
-          <div className="border border-gray-300 m-8 px-8 col-span-3">
-            <div className="text-xl font-semibold px-8 pt-8">
+          <div className="border border-gray-300 m-8 lg:px-8 md:px-8 px-2 col-span-3">
+            <div className="text-xl font-semibold lg:px-8 md:px-8 px-2 pt-8">
               PROFILE DETAILS
             </div>
-            <div className=" flex flex-col gap-6 p-8">
-              <div className="grid grid-cols-2 gap-8">
+            <div className=" flex flex-col gap-6 lg:p-8 md:p-8 px-2 pt-8">
+              <div className="grid grid-cols-2 lg:gap-8 md:gap-8 gap-2">
                 <p>FULL NAME</p>
                 <p>{userDetails.fullName.toUpperCase() || "Not specified"}</p>
               </div>
-              <div className="grid grid-cols-2 gap-8">
+              <div className="grid grid-cols-2 lg:gap-8 md:gap-8 gap-2">
                 <p>MOBILE NUMBER</p>
                 <p>{userDetails.phone || "Not specified"}</p>
               </div>
-              <div className="grid grid-cols-2 gap-8">
+              <div className="grid grid-cols-2 lg:gap-8 md:gap-8 gap-2">
                 <div>EMAIL</div>
                 <div>{userDetails.email || "Not specified"}</div>
               </div>
-              <div className="grid grid-cols-2 gap-8">
+              <div className="grid grid-cols-2 lg:gap-8 md:gap-8 gap-2">
                 <p>GENDER</p>
                 <p>{userDetails.gender.toUpperCase() || "Not specified"}</p>
               </div>
-              <div className="grid grid-cols-2 gap-8">
+              <div className="grid grid-cols-2 lg:gap-8 md:gap-8 gap-2">
                 <p>DATE OF BIRTH</p>
                 <p>
                   {userDetails.dob?.toLocaleDateString() || "Not specified"}
