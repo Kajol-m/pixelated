@@ -1,53 +1,24 @@
 import { useNavigate } from "react-router-dom";
 import Button from "../Button/Button";
-import api from "@/lib/api";
-import { toast } from "sonner";
-import { useDispatch } from "react-redux";
-import { clearWishlist } from "@/store/features/wishlistSlice";
+import { useEffect } from "react";
 
 const UserDropdown: React.FC = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const isLogin = localStorage.getItem("isLogin");
 
-  const handleLogout = async () => {
-    try {
-      await api.post("/api/users/logout");
-      localStorage.removeItem("User");
-      localStorage.removeItem("token");
-      localStorage.removeItem("isLogin");
-      dispatch(clearWishlist());
-      navigate("/");
-      toast.success("Logged out successfully!");
-    } catch (error) {
-      console.error("Logout failed:", error);
-      toast.error("Failed to logout. Please try again.");
+  useEffect(() => {
+    if (isLogin) {
+      navigate("/profile");
     }
-  };
-  const handleProfile = () => {
-    navigate("/profile");
-  };
+  }, [isLogin, navigate]);
 
-  const handleLogin = () => {
-    navigate("/login");
-  };
+  if (isLogin) {
+    return null;
+  }
 
   return (
-    <div className="cursor-pointer">
-      {isLogin ? (
-        <div className="flex flex-col">
-          <Button variant="user-dropdown" onClick={handleProfile}>
-            PROFILE
-          </Button>
-          <Button variant="user-dropdown" onClick={handleLogout}>
-            LOGOUT
-          </Button>
-        </div>
-      ) : (
-        <Button variant="user-dropdown" onClick={handleLogin}>
-          Login
-        </Button>
-      )}
+    <div className="cursor-pointer" onClick={() => navigate(`/login`)}>
+      <Button variant="user-dropdown">Login</Button>
     </div>
   );
 };

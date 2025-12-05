@@ -10,7 +10,15 @@ import {
   setLoading as setAddressLoading,
 } from "@/store/features/addressSlice";
 
-export default function AddAddressForm() {
+type AddAddressFormProps = {
+  close?: () => void;
+  mode?: "popup" | "page"; // NEW
+};
+
+export default function AddAddressForm({
+  close,
+  mode = "page",
+}: AddAddressFormProps) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -236,7 +244,11 @@ export default function AddAddressForm() {
           <Button
             variant="primary"
             onClick={() => {
-              navigate(`/address`);
+              if (mode === "popup") {
+                close?.(); 
+              } else {
+                navigate("/address");
+              }
             }}
             className="w-1/2"
           >

@@ -31,6 +31,8 @@ import EditAddress from "./pages/Profile/EditAddress";
 import AddAddress from "./pages/Profile/AddAddress";
 import ProtectedRoute from "./hooks/ProtectedRoute";
 import Search from "./common/HeaderSearch/Search";
+import ProceedToCkeckout from "./pages/ProceedToCheckout/ProceedToCkeckout";
+import Payment from "./pages/Payment/Payment";
 
 function App() {
   return (
@@ -140,6 +142,8 @@ function App() {
             }
           />
           <Route path="/search" element={<Search />} />
+          <Route path="/select-address" element={<ProceedToCkeckout />} />
+          <Route path="/payment" element={<Payment/>}/>
         </Routes>
       </ErrorBoundary>
     </>

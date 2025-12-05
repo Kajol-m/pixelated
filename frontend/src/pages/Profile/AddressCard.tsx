@@ -34,7 +34,7 @@ const AddressCard: React.FC<AddressCardProps> = ({
 
   return (
     <div
-      className={`w-full bg-white border border-gray-300 p-5 hover:shadow-lg transition-all duration-300 ${className}`}
+      className={`w-full bg-white border border-gray-300 lg:p-5 md:p-5 p-2 hover:shadow-lg transition-all duration-300 ${className}`}
     >
       <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
         <div className="flex-1">
@@ -51,23 +51,24 @@ const AddressCard: React.FC<AddressCardProps> = ({
             )}
           </div>
 
-          <p className="mt-3 text-sm text-gray-700 break-words">{fullAddress}</p>
+          <p className="mt-3 text-sm text-gray-700 break-words">
+            {fullAddress}
+          </p>
         </div>
 
         {/* Actions */}
         <div className="flex items-start gap-2">
-          <button
-            type="button"
-            onClick={() => onSetDefault && onSetDefault(address_id)}
-            className={`hidden sm:inline-flex items-center gap-2 px-3 py-2 text-sm border transition cursor-pointer
-              ${
-                is_default === 1
-                  ? "bg-black text-white border-transparent"
-                  : "bg-white text-gray-700 border-gray-200 hover:bg-gray-50"
-              }`}
-          >
-            {is_default === 1 ? "Default" : "Make default"}
-          </button>
+          {is_default === 0 && (
+            <button
+              type="button"
+              onClick={() => onSetDefault && onSetDefault(address_id)}
+              className={`hidden sm:inline-flex items-center gap-2 px-3 py-2 text-sm border transition cursor-pointer 
+      bg-white text-gray-700 border-gray-200 hover:bg-gray-50
+    `}
+            >
+              Make default
+            </button>
+          )}
 
           <button
             type="button"

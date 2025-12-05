@@ -36,7 +36,7 @@ const TabMenu = () => {
   ];
 
   return (
-    <div className="flex flex-col gap-3 p-8 border-r border-gray-300 h-full">
+    <div className="flex flex-col gap-3 lg:p-8 md:p-8 pt-8 pl-2 border-r border-gray-300 h-full">
       {links.map((item) => {
         const isActive = location.pathname.startsWith(item.link);
         

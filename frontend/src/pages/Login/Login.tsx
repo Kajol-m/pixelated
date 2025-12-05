@@ -192,7 +192,7 @@ const Login = () => {
 
   return (
     <div className="flex items-center justify center h-screen items-center justify-center h-screen bg-gray-300 ">
-      <div className=" relative w-full max-w-md p-[50px] bg-white m-8 shadow-lg cursor-pointer">
+      <div className=" relative w-full max-w-md lg:p-[50px] md:p-[50px] p-[20px] bg-white m-8 shadow-lg cursor-pointer">
         <button
           onClick={() => navigate("/")}
           className="absolute right-[25px] top-[25px] pb-5 cursor-pointer"
